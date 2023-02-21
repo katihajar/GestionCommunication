@@ -33,8 +33,6 @@ public class AuthREST {
     @Autowired
     JwtHelper jwtHelper;
     @Autowired
-    PasswordEncoder passwordEncoder;
-    @Autowired
     UserService userService;
 
     @PostMapping("/login")
@@ -44,15 +42,11 @@ public class AuthREST {
         System.out.println(dto.getPassword());
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-
         User user = (User) authentication.getPrincipal();
-
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setOwner(user);
         refreshTokenRepository.save(refreshToken);
         User user1 = userRepository.findUserById(user.getId());
-        System.out.println(user1);
-
         String accessToken = jwtHelper.generateAccessToken(user);
         String refreshTokenString = jwtHelper.generateRefreshToken(user, refreshToken);
         return ResponseEntity.ok(new TokenDTO(user1, accessToken, refreshTokenString));
@@ -78,10 +72,8 @@ public class AuthREST {
         String refreshTokenString = dto.getRefreshToken();
         if (jwtHelper.validateRefreshToken(refreshTokenString) && refreshTokenRepository.existsById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString))) {
             // valid and exists in db
-
             User user = userService.findUserByUsername(jwtHelper.getUserUsernameFromRefreshToken(refreshTokenString));
             String accessToken = jwtHelper.generateAccessToken(user);
-
             return ResponseEntity.ok(new TokenDTO(user, accessToken, refreshTokenString));
         }
 
@@ -93,15 +85,11 @@ public class AuthREST {
         String refreshTokenString = dto.getRefreshToken();
         if (jwtHelper.validateRefreshToken(refreshTokenString) && refreshTokenRepository.existsById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString))) {
             // valid and exists in db
-
             refreshTokenRepository.deleteById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString));
-
             User user = userService.findUserByUsername(jwtHelper.getUserUsernameFromRefreshToken(refreshTokenString));
-
             RefreshToken refreshToken = new RefreshToken();
             refreshToken.setOwner(user);
             refreshTokenRepository.save(refreshToken);
-
             String accessToken = jwtHelper.generateAccessToken(user);
             String newRefreshTokenString = jwtHelper.generateRefreshToken(user, refreshToken);
 

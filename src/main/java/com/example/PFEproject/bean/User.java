@@ -3,11 +3,11 @@ package com.example.PFEproject.bean;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 
 @Data
@@ -18,13 +18,28 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NonNull
     private String nom;
+    @NonNull
     private String prenom;
+    @NonNull
     private String username;
+    @NonNull
     private String password;
+    @NonNull
+    private String lots;
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles;
 
+    @OneToMany(mappedBy = "createurChangement")
+    private List<Changement> changementList;
+    @OneToMany(mappedBy = "createurIncident")
+    private List<Incident> incidentList;
+
+    @OneToMany(mappedBy = "pilote")
+    private List<PiloteApplication> piloteApplicationList;
+    @OneToMany(mappedBy = "responsable")
+    private List<ResponsableApplication> responsableApplicationList;
     @Override
     public Collection<Role> getAuthorities() {
         return roles;
