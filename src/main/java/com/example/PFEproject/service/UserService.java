@@ -9,12 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
-import java.util.Optional;
+import java.util.Set;
 
 
 @RequiredArgsConstructor
@@ -26,9 +26,7 @@ public class UserService implements UserDetailsService {
     UserRepository userRepository;
     @Autowired
     RoleRepo roleRepo;
-    public Optional<User> findByUsername(String username) {
-        return userRepository.findByUsername(username);
-    }
+
 
     public User findUserByUsername(String username) {
         return userRepository.findUserByUsername(username);
@@ -49,20 +47,29 @@ public class UserService implements UserDetailsService {
     }
 
 
-    public User saveUser(User user){
+    public User saveUser(User user, Long id){
         User usr = findUserByUsername(user.getUsername());
         if (usr == null) {
+            Set<Role> authorities = new HashSet<>();
+            roleRepo.findById(id).ifPresent(authorities::add);
+            user.setRoles(authorities);
             return userRepository.save(user);
         }else {
             return null;
         }
     }
-
-    public void addRoleToUser(String username, String roleName){
-        User us = userRepository.findUserByUsername(username);
-        Role role = roleRepo.findByName(roleName);
-        us.getRoles().add(role);
+    public User setRole(String username, Long id){
+        User usr = findUserByUsername(username);
+        if (usr == null) {
+            return null;
+        }else {
+            Set<Role> authorities = new HashSet<>();
+            roleRepo.findById(id).ifPresent(authorities::add);
+            usr.setRoles(authorities);
+            return userRepository.save(usr);
+        }
     }
+
     public List<User> findAll() {
         return userRepository.findAll();
     }
