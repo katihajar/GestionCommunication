@@ -39,6 +39,4 @@ public class Changement {
     @ManyToOne
     private User createurChangement;
 
-
-
 }

@@ -25,9 +25,9 @@ public class Incident {
     @NonNull
 
     private String statut;
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="dd-MM-yyyy")
     private Date dateDebut;
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="dd-MM-yyyy")
     private Date dateFin;
     @NonNull
     @Size(min = 3, max = 100)
@@ -43,6 +43,7 @@ public class Incident {
     @Size(min = 0, max = 1000)
     private String solutionContournement;
     @NonNull
+    @JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss")
     private Date prochaineCommunication;
     @NonNull
     @OneToMany(mappedBy="incident")

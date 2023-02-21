@@ -19,9 +19,9 @@ public class Application {
     @NonNull
     private String nomApplication;
     @OneToMany(mappedBy="application")
-    private List<ResponsableApplication> responsableApplications;
+    private List<ResponsableApplication> responsableApplicationList;
     @OneToMany(mappedBy="application")
-    private List<PiloteApplication> piloteApplications;
+    private List<PiloteApplication> piloteApplicationList;
 
     @OneToMany(mappedBy="application")
     private List<Incident> incidentList;

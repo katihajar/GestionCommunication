@@ -19,6 +19,7 @@ public class DestinataireCommunication {
     private String prenom;
     @NonNull
     @Size(max = 60)
+    @Column( unique = true)
     @Email
     private String email;
 

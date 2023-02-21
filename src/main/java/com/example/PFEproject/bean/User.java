@@ -23,6 +23,7 @@ public class User implements UserDetails {
     @NonNull
     private String prenom;
     @NonNull
+    @Column( unique = true)
     private String username;
     @NonNull
     private String password;
