@@ -1,17 +1,11 @@
 package com.example.PFEproject.rest;
 import com.example.PFEproject.bean.Role;
 import com.example.PFEproject.bean.User;
-import com.example.PFEproject.dto.LoginDTO;
 import com.example.PFEproject.dto.TokenDTO;
 import com.example.PFEproject.service.RoleService;
 import com.example.PFEproject.service.UserService;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonValueFormat;
 import org.hamcrest.CoreMatchers;
-import org.junit.After;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -108,7 +102,6 @@ class UserRESTTest {
         response.andExpect(MockMvcResultMatchers.jsonPath("$.username", CoreMatchers.is(user.getUsername())));
         response.andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.is(user.getId().intValue())));
     }
-
     @AfterEach
     public void Logout(){
           authREST.logoutAll();
