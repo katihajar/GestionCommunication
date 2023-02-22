@@ -1,16 +1,14 @@
 package com.example.PFEproject.rest;
 
 
-import com.example.PFEproject.bean.Role;
 import com.example.PFEproject.bean.User;
-import com.example.PFEproject.repo.UserRepository;
-import com.example.PFEproject.service.RoleService;
 import com.example.PFEproject.service.UserService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -26,8 +24,7 @@ public class UserREST {
 
     @Autowired
     UserService userService;
-    @Autowired
-    RoleService roleService;
+
     @Autowired
     PasswordEncoder passwordEncoder;
 
@@ -44,16 +41,25 @@ public class UserREST {
         us.setPassword(passwordEncoder.encode(us.getPassword()));
         return ResponseEntity.created(uri).body(userService.saveUser(us,userRole.getIdRole()));
     }
-    @PostMapping("/saveRole")
-    public ResponseEntity<Role> SaveRole(@RequestBody Role role){
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users/saveRole").toUriString());
-        return ResponseEntity.created(uri).body(roleService.saveRole(role));
-    }
-
-
     @PutMapping("/setRole")
     public ResponseEntity<User> setRole(@RequestBody UsernameRole usernameRole) {
         return  ResponseEntity.ok().body(userService.setRole(usernameRole.getUsername(), usernameRole.getIdRole()));
+    }
+    @GetMapping("/username/{username}")
+    public User loadUserByUsername(@PathVariable String username) throws UsernameNotFoundException {
+        return userService.loadUserByUsername(username);
+    }
+    @GetMapping("/id/{id}")
+    public User findById(@PathVariable Long id) {
+        return userService.findById(id);
+    }
+    @PostMapping("/saveAll")
+    public ResponseEntity<List<User>> saveAll(@RequestBody Iterable<User> users) {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users/saveAll").toUriString());
+        for (User user: users) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
+        return ResponseEntity.created(uri).body(userService.saveAll(users));
     }
 }
 

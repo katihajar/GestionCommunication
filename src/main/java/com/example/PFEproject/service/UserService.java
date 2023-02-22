@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -46,7 +47,19 @@ public class UserService implements UserDetailsService {
         return userRepository.findUserById(id);
     }
 
-
+    public List<User> saveAll(Iterable<User> users){
+        List<User> userss=new ArrayList<>();
+        for (User u: users) {
+            User usr = findUserByUsername(u.getUsername());
+            if (usr == null) {
+                userss.add(u);
+            }else {
+                log.info("username existe : "+u.getUsername());
+            }
+        }
+        userRepository.saveAll(userss);
+        return userss;
+    }
     public User saveUser(User user, Long id){
         User usr = findUserByUsername(user.getUsername());
         if (usr == null) {
@@ -55,7 +68,7 @@ public class UserService implements UserDetailsService {
             user.setRoles(authorities);
             return userRepository.save(user);
         }else {
-            return null;
+            return usr;
         }
     }
     public User setRole(String username, Long id){

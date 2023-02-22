@@ -25,7 +25,7 @@ public class RoleService {
         if (r == null) {
             return roleRepo.save(role);
         }else {
-            return null;
+            return r;
         }
     }
 

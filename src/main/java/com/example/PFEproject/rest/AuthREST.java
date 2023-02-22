@@ -53,7 +53,7 @@ public class AuthREST {
     }
 
 
-    @PostMapping("logout")
+    @PostMapping("/logout")
     public ResponseEntity<?> logout(@RequestBody TokenDTO dto) {
         String refreshTokenString = dto.getRefreshToken();
         if (jwtHelper.validateRefreshToken(refreshTokenString) && refreshTokenRepository.existsById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString))) {
@@ -66,6 +66,12 @@ public class AuthREST {
         throw new BadCredentialsException("invalid token");
     }
 
+    @PostMapping("/logoutAll")
+    public ResponseEntity<?> logoutAll() {
+            // valid and exists in db
+            refreshTokenRepository.deleteAll();
+            return ResponseEntity.ok().build();
+    }
 
     @PostMapping("access-token")
     public ResponseEntity<?> accessToken(@RequestBody TokenDTO dto) {
