@@ -42,6 +42,8 @@ public class PointVersion {
     private List<Ticket> ticketList;
     @ManyToOne
     private User createurPointVersion;
-
+    private String imageType;
+    private long imageSize;
+    private byte[] image;
 
 }
