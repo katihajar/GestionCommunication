@@ -59,10 +59,10 @@ class UserRESTTest {
         rolesAdmin.add(roleAdmin);
         rolesPilote.add(rolePilote);
         rolesResponsable.add(roleResponsable);
-         id = 9L;
-         user = new User(id,"hajar","hajar","hajar","hajar","3B",rolesAdmin,null,null,null,null);
-         user1 = new User(7L,"Sofia","Sofia","Sofia","Sofia","3B",rolesPilote,null,null,null,null);
-         user2 = new User(10L,"hajar","hajar","username","username","3B",rolesResponsable,null,null,null,null);
+         id = 4L;
+         user = new User(id,"hajar","hajar","hajar","hajar","3B",rolesAdmin,null,null,null,null,null,null,null,null);
+         user1 = new User(7L,"Sofia","Sofia","Sofia","Sofia","3B",rolesPilote,null,null,null,null,null,null,null,null);
+         user2 = new User(10L,"hajar","hajar","username","username","3B",rolesResponsable,null,null,null,null,null,null,null,null);
         userList.add(user);
         userList.add(user1);
         userList.add(user2);

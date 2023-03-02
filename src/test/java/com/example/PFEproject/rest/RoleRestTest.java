@@ -1,11 +1,9 @@
 package com.example.PFEproject.rest;
 
 import com.example.PFEproject.bean.Role;
-import com.example.PFEproject.bean.User;
 import com.example.PFEproject.dto.LoginDTO;
 import com.example.PFEproject.dto.TokenDTO;
 import com.example.PFEproject.service.RoleService;
-import com.example.PFEproject.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -20,9 +18,7 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import java.util.ArrayList;
 
-import static org.junit.jupiter.api.Assertions.*;
 @AutoConfigureMockMvc(addFilters = false)
 @SpringBootTest
 @TestPropertySource("classpath:config/ressource.properties")
