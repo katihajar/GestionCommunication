@@ -27,6 +27,10 @@ public class EtatProcessusMetier {
     private Date dateAjout;
     @OneToMany(mappedBy = "etatProcessusMetier")
     private List<EtatProcessusMetierDetail> etatProcessusMetierDetailList;
+     @OneToMany(mappedBy = "etatProcessusMetier")
+    private List<HealthChekPreprodProd> healthChekPreprodProdList;
+
+
 
 
 }

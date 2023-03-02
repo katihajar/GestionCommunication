@@ -28,9 +28,14 @@ public class HealthChekPreprodProd {
     @NonNull
     private String type;
 
+    @ManyToOne
+    private EtatProcessusMetier etatProcessusMetier;
+
     @OneToMany(mappedBy = "healthChekPreprodProd")
     List<HealthChekPreprodProdDetail> healthChekPreprodProdDetailList;
 
     @ManyToOne
     private User createurHealthChekPreprodProd;
+
+
 }
