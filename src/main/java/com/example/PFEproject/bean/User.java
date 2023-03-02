@@ -32,15 +32,24 @@ public class User implements UserDetails {
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles;
 
-    @OneToMany(mappedBy = "createurChangement")
-    private List<Changement> changementList;
+    @OneToMany(mappedBy = "createurOperation")
+    private List<Operation> operationList;
     @OneToMany(mappedBy = "createurIncident")
     private List<Incident> incidentList;
 
     @OneToMany(mappedBy = "pilote")
     private List<PiloteApplication> piloteApplicationList;
     @OneToMany(mappedBy = "responsable")
-    private List<ResponsableApplication> responsableApplicationList;
+    private List<Application> applicationList;
+    @OneToMany(mappedBy = "createurChengement")
+    private List<ChangementPlanifier> changementPlanifierList;
+    @OneToMany(mappedBy = "createurPointVersion")
+    private List<PointVersion> pointVersionList;
+    @OneToMany(mappedBy = "createurHealthChekPreprodProd")
+    private List<HealthChekPreprodProd> healthChekPreprodProdList;
+    @OneToMany(mappedBy = "createurHealthCheckBwPerimetre")
+    private List<HealthCheckBwPerimetre> healthCheckBwPerimetreList;
+
     @Override
     public Collection<Role> getAuthorities() {
         return roles;

@@ -23,7 +23,6 @@ public class Incident {
     @Size(min = 3, max = 60)
     private String titreIncident;
     @NonNull
-
     private String statut;
     @JsonFormat(pattern="dd-MM-yyyy")
     private Date dateDebut;

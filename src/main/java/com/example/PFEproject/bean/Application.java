@@ -18,17 +18,28 @@ public class Application {
     private Long id;
     @NonNull
     private String nomApplication;
-    @OneToMany(mappedBy="application")
-    private List<ResponsableApplication> responsableApplicationList;
+    @NonNull
+    private String version;
+    @ManyToOne
+    private User responsable;
+    @NonNull
+    private String lot;
+    @NonNull
+    private String charteIncident;
+    @NonNull
+    private String disponibilite;
     @OneToMany(mappedBy="application")
     private List<PiloteApplication> piloteApplicationList;
-
     @OneToMany(mappedBy="application")
     private List<Incident> incidentList;
     @OneToMany(mappedBy="application")
-    private List<Changement> changementList;
-
+    private List<Operation> operationList;
     @OneToMany(mappedBy="application")
     private List<DestinataireCommunication> destinataireCommunicationList;
-
+    @OneToMany(mappedBy="application")
+    private List<PointVersion> pointVersionList;
+    @OneToMany(mappedBy="application")
+    private List<HealthChekPreprodProdDetail> healthChekPreprodProdDetailList;
+    @OneToMany(mappedBy="application")
+    private List<ChangementPlanifier> changementPlanifierList;
 }

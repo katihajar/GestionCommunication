@@ -6,19 +6,23 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
-@AllArgsConstructor
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
-public class ResponsableApplication {
+public class ContenuChangement {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NonNull
-    @ManyToOne
-    private User responsable;
+    @Size(min = 3, max = 100)
+    private String titre;
     @NonNull
+    @Size(min = 3, max = 500)
+    private String description;
+
     @ManyToOne
-    private Application application;
+    private ChangementPlanifier changementPlanifier;
 }

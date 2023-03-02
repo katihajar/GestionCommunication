@@ -6,27 +6,24 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import javax.persistence.*;
-import javax.validation.constraints.*;
-@AllArgsConstructor
+import javax.validation.constraints.Size;
+
 @NoArgsConstructor
+@AllArgsConstructor
 @Data
 @Entity
-public class DestinataireCommunication {
+public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String nom;
-    private String prenom;
     @NonNull
-    @Size(max = 60)
-    @Column( unique = true)
-    @Email
-    private String email;
+    @Size(min = 3, max = 100)
+    private String numero;
     @NonNull
-    private String typeDest;
-
+    @Size(min = 3, max = 500)
+    private String description;
+    @NonNull
+    private String type;
     @ManyToOne
-    private Application application;
-
-
+    private PointVersion pointVersion;
 }

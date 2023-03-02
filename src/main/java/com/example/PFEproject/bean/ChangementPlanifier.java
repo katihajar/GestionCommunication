@@ -9,34 +9,33 @@ import lombok.NonNull;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Entity
-public class Changement {
+public class ChangementPlanifier {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NonNull
-    @Size(min = 3, max = 60)
-    private String titreChangement;
+    @Size(min = 3, max = 100)
+    private String titre;
     @NonNull
+    @Size(min = 3, max = 100)
     private String statut;
-    @Size(min = 0, max = 60)
-    private String Numero;
     @NonNull
-    @Size(min = 3, max = 1000)
-    private String Description;
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @Size(min = 3, max = 500)
+    private String impactMetier;
+    @JsonFormat(pattern="dd-MM-yyyy")
     private Date dateDebut;
-    @JsonFormat(pattern="yyyy-MM-dd")
+    @JsonFormat(pattern="dd-MM-yyyy")
     private Date dateFin;
-    @NonNull
+    @OneToMany(mappedBy = "changementPlanifier")
+    private List<ContenuChangement> contenuChangementList;
     @ManyToOne
     private Application application;
-    @NonNull
     @ManyToOne
-    private User createurChangement;
-
+    private User createurChengement;
 }
