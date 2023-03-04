@@ -1,19 +1,14 @@
 package com.example.PFEproject;
 
 import com.example.PFEproject.bean.Role;
-import com.example.PFEproject.bean.User;
-import com.example.PFEproject.rest.UserREST;
+import com.example.PFEproject.rest.admin.UserREST;
 import com.example.PFEproject.service.RoleService;
 import com.example.PFEproject.service.UserService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.ArrayList;
 @SpringBootApplication
 public class PfEprojectApplication {
 

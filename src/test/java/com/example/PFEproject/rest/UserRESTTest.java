@@ -5,6 +5,7 @@ import com.example.PFEproject.dto.TokenDTO;
 import com.example.PFEproject.service.RoleService;
 import com.example.PFEproject.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.Data;
 import org.hamcrest.CoreMatchers;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,7 +40,7 @@ class UserRESTTest {
     Role roleAdmin;
     Role rolePilote;
     Role roleResponsable;
-    UserRole userRole;
+    UserRoles userRole;
     Collection<Role> rolesAdmin = new ArrayList<>();
     Collection<Role> rolesPilote = new ArrayList<>();
     Collection<Role> rolesResponsable = new ArrayList<>();
@@ -52,7 +53,7 @@ class UserRESTTest {
     String username;
     @BeforeEach
     void setUp() throws Exception {
-        userRole = new UserRole();
+        userRole = new UserRoles();
          roleAdmin = roleService.findByName("ROLE_ADMIN");
          rolePilote = roleService.findByName("ROLE_PILOTE");
          roleResponsable = roleService.findByName("ROLE_RESPONSABLE");
@@ -106,4 +107,11 @@ class UserRESTTest {
     public void Logout(){
           authREST.logoutAll();
     }
+}
+
+@Data
+class UserRoles{
+    private User user;
+    private Long idRole;
+
 }

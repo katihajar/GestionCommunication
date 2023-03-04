@@ -1,4 +1,4 @@
-package com.example.PFEproject.rest;
+package com.example.PFEproject.rest.admin;
 
 
 import com.example.PFEproject.bean.User;
@@ -19,7 +19,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/admin/users")
 public class UserREST {
 
     @Autowired

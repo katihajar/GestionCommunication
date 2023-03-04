@@ -22,7 +22,7 @@ public class HealthCheckBwPerimetre {
     @NonNull
     @JsonFormat(pattern="dd-MM-yyyy")
     private Date dateAjout;
-    @OneToMany(mappedBy = "bwPerimetre")
+    @OneToMany(mappedBy = "healthCheckBwPerimetre")
     private List<HealthCheckBwPerimetreDetail> healthCheckBwPerimetreDetailList;
 
     @ManyToOne

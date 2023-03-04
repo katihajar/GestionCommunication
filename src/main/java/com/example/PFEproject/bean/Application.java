@@ -27,7 +27,7 @@ public class Application {
     @NonNull
     private String charteIncident;
     @NonNull
-    private String disponibilite;
+    private boolean disponibilite;
     @OneToMany(mappedBy="application")
     private List<PiloteApplication> piloteApplicationList;
     @OneToMany(mappedBy="application")

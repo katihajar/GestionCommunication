@@ -1,4 +1,4 @@
-package com.example.PFEproject.rest;
+package com.example.PFEproject.rest.admin;
 
 import com.example.PFEproject.bean.Role;
 import com.example.PFEproject.service.RoleService;
@@ -13,7 +13,7 @@ import java.net.URI;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/roles")
+@RequestMapping("/api/admin/roles")
 public class RoleRest {
     @Autowired
     RoleService roleService;
