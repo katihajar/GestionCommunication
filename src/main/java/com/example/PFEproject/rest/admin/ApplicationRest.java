@@ -29,7 +29,7 @@ public class ApplicationRest {
         return ResponseEntity.ok().body(applicationService.findAll());
     }
     @PostMapping("/saveApp")
-    public ResponseEntity<Application> saveApp(@RequestBody Application application) {
+    public ResponseEntity<Application> saveApp(@RequestBody Application application) throws Exception {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/admin/application/saveApp").toUriString());
         return ResponseEntity.created(uri).body(applicationService.saveApp(application));
     }

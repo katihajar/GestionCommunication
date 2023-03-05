@@ -33,24 +33,29 @@ public class ApplicationService {
     public Application findByNomApplication(String nom) {
         return applicationRepo.findByNomApplication(nom);
     }
-    public Application saveApp(Application application){
+    public Application saveApp(Application application) throws Exception {
         Application app = findByNomApplication(application.getNomApplication());
         if (app == null) {
-            Application appli = new Application();
-            appli.setNomApplication(application.getNomApplication());
-            appli.setCharteIncident(application.getCharteIncident());
-            appli.setVersion(application.getVersion());
-            appli.setLot(application.getLot());
-            appli.setDisponibilite(application.getDisponibilite());
-            appli.setResponsable(application.getResponsable());
-            applicationRepo.save(appli);
-            Application appliSave = findByNomApplication(application.getNomApplication());
-            if(application.getPiloteApplicationList()!=null){
-                piloteApplicationService.saveAll(appliSave, application.getPiloteApplicationList());
+            if (application.getNomApplication() != "" ) {
+                Application appli = new Application();
+                appli.setNomApplication(application.getNomApplication());
+                appli.setCharteIncident(application.getCharteIncident());
+                appli.setVersion(application.getVersion());
+                appli.setLot(application.getLot());
+                appli.setDisponibilite(application.getDisponibilite());
+                appli.setResponsable(application.getResponsable());
+                applicationRepo.save(appli);
+                Application appliSave = findByNomApplication(application.getNomApplication());
+                if (application.getPiloteApplicationList() != null) {
+                    piloteApplicationService.saveAll(appliSave, application.getPiloteApplicationList());
+                }
+                return appliSave;
+            }else {
+                throw new Exception();
+
             }
-            return appliSave;
         }else {
-            return app;
+            throw new Exception();
         }
     }
 
