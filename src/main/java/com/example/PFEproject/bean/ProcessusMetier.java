@@ -1,5 +1,7 @@
 package com.example.PFEproject.bean;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +22,7 @@ public class ProcessusMetier {
     @NonNull
     @Size(min = 3, max = 100)
     private String titre;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "processusMetier")
     private List<EtatProcessusMetierDetail> etatProcessusMetierDetailList;
 }

@@ -1,6 +1,7 @@
 package com.example.PFEproject.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,7 @@ public class ChangementPlanifier {
     private Date dateDebut;
     @JsonFormat(pattern="dd-MM-yyyy")
     private Date dateFin;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "changementPlanifier")
     private List<ContenuChangement> contenuChangementList;
     @ManyToOne

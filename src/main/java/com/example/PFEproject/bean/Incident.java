@@ -1,6 +1,8 @@
 package com.example.PFEproject.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -44,13 +46,11 @@ public class Incident {
     @NonNull
     @JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss")
     private Date prochaineCommunication;
-    @NonNull
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy="incident")
     private List<PlanAction> planActions;
-    @NonNull
     @ManyToOne
     private User createurIncident;
-    @NonNull
     @ManyToOne
     private Application application;
 

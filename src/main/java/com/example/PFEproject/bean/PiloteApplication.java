@@ -15,10 +15,8 @@ public class PiloteApplication {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @NonNull
     @ManyToOne
     private User pilote;
-    @NonNull
     @ManyToOne
     private Application application;
 }

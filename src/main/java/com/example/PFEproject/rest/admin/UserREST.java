@@ -36,11 +36,17 @@ public class UserREST {
 
     @PostMapping("/saveUser")
     public ResponseEntity<User> SaveUser(@RequestBody UserRole userRole){
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users/saveUser").toUriString());
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/admin/users/saveUser").toUriString());
         User us = userRole.getUser();
         us.setPassword(passwordEncoder.encode(us.getPassword()));
         return ResponseEntity.created(uri).body(userService.saveUser(us,userRole.getIdRole()));
     }
+    @PutMapping("/UpdateUser")
+    public ResponseEntity<User> updateUser(@RequestBody UserRole userRole) {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/admin/users/UpdateUser").toUriString());
+        return ResponseEntity.created(uri).body(userService.updateUser(userRole.getUser(), userRole.getIdRole()));
+    }
+
     @PutMapping("/setRole")
     public ResponseEntity<User> setRole(@RequestBody UsernameRole usernameRole) {
         return  ResponseEntity.ok().body(userService.setRole(usernameRole.getUsername(), usernameRole.getIdRole()));
@@ -55,7 +61,7 @@ public class UserREST {
     }
     @PostMapping("/saveAll")
     public ResponseEntity<List<User>> saveAll(@RequestBody Iterable<User> users) {
-        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/users/saveAll").toUriString());
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/admin/users/saveAll").toUriString());
         for (User user: users) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
         }

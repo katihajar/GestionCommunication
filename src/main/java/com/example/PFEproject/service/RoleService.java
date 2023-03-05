@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
@@ -15,6 +17,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class RoleService {
     @Autowired
     RoleRepo roleRepo;
+
+    public List<Role> findAll() {
+        return roleRepo.findAll();
+    }
 
     public Role findByName(String name) {
         return roleRepo.findByName(name);

@@ -1,5 +1,7 @@
 package com.example.PFEproject.bean;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -27,19 +29,26 @@ public class Application {
     @NonNull
     private String charteIncident;
     @NonNull
-    private boolean disponibilite;
+    private String disponibilite;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy="application")
     private List<PiloteApplication> piloteApplicationList;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy="application")
     private List<Incident> incidentList;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy="application")
     private List<Operation> operationList;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy="application")
     private List<DestinataireCommunication> destinataireCommunicationList;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy="application")
     private List<PointVersion> pointVersionList;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy="application")
     private List<HealthChekPreprodProdDetail> healthChekPreprodProdDetailList;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy="application")
     private List<ChangementPlanifier> changementPlanifierList;
 }

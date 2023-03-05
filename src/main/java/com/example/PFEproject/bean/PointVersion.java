@@ -1,5 +1,7 @@
 package com.example.PFEproject.bean;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -34,10 +36,13 @@ public class PointVersion {
     private String remarque;
     @ManyToOne
     private Application application;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "pointVersion")
     private List<LivraisonCARM> livraisonCARMList;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "pointVersion")
     private List<PlanningPointVersion> planningPointVersionList;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "pointVersion")
     private List<Ticket> ticketList;
     @ManyToOne

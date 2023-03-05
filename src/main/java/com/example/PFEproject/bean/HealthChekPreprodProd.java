@@ -1,6 +1,8 @@
 package com.example.PFEproject.bean;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,7 +32,7 @@ public class HealthChekPreprodProd {
 
     @ManyToOne
     private EtatProcessusMetier etatProcessusMetier;
-
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "healthChekPreprodProd")
     List<HealthChekPreprodProdDetail> healthChekPreprodProdDetailList;
 

@@ -5,8 +5,11 @@ import com.example.PFEproject.service.ApplicationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 
 @Slf4j
@@ -22,15 +25,17 @@ public class ApplicationRest {
         return applicationService.deleteApplicationById(id);
     }
     @GetMapping("/AllApp")
-    public List<Application> findAll() {
-        return applicationService.findAll();
+    public ResponseEntity<List<Application>> findAll() {
+        return ResponseEntity.ok().body(applicationService.findAll());
     }
     @PostMapping("/saveApp")
-    public Application saveApp(@RequestBody Application application) {
-        return applicationService.saveApp(application);
+    public ResponseEntity<Application> saveApp(@RequestBody Application application) {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/admin/application/saveApp").toUriString());
+        return ResponseEntity.created(uri).body(applicationService.saveApp(application));
     }
     @PutMapping("/updateApp")
-    public Application updateApp(@RequestBody Application application) {
-        return applicationService.updateApp(application);
+    public ResponseEntity<Application> updateApp(@RequestBody Application application) {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/admin/application/updateApp").toUriString());
+        return ResponseEntity.created(uri).body(applicationService.updateApp(application));
     }
 }

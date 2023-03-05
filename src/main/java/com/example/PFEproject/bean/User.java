@@ -1,5 +1,7 @@
 package com.example.PFEproject.bean;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,22 +33,28 @@ public class User implements UserDetails {
     private String lots;
     @ManyToMany(fetch = FetchType.EAGER)
     private Collection<Role> roles;
-
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "createurOperation")
     private List<Operation> operationList;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "createurIncident")
     private List<Incident> incidentList;
-
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "pilote")
     private List<PiloteApplication> piloteApplicationList;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "responsable")
     private List<Application> applicationList;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "createurChengement")
     private List<ChangementPlanifier> changementPlanifierList;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "createurPointVersion")
     private List<PointVersion> pointVersionList;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "createurHealthChekPreprodProd")
     private List<HealthChekPreprodProd> healthChekPreprodProdList;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "createurHealthCheckBwPerimetre")
     private List<HealthCheckBwPerimetre> healthCheckBwPerimetreList;
 

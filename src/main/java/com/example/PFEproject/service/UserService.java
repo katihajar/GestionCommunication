@@ -71,6 +71,23 @@ public class UserService implements UserDetailsService {
             return usr;
         }
     }
+
+    public User updateUser(User user, Long id){
+        User usr = findUserByUsername(user.getUsername());
+        if (usr == null) {
+
+            return null;
+        }else {
+            Set<Role> authorities = new HashSet<>();
+            roleRepo.findById(id).ifPresent(authorities::add);
+            usr.setRoles(authorities);
+            usr.setNom(user.getNom());
+            usr.setLots(user.getLots());
+            usr.setPrenom(user.getPrenom());
+            usr.setUsername(user.getUsername());
+            return userRepository.save(usr);
+        }
+    }
     public User setRole(String username, Long id){
         User usr = findUserByUsername(username);
         if (usr == null) {

@@ -32,10 +32,8 @@ public class Operation {
     private Date dateDebut;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date dateFin;
-    @NonNull
     @ManyToOne
     private Application application;
-    @NonNull
     @ManyToOne
     private User createurOperation;
 

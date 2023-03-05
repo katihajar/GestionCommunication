@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
+
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -26,5 +28,9 @@ public class RoleRest {
     @PostMapping("/FindRoleByName/{name}")
     public ResponseEntity<Role> findByName(@PathVariable String name) {
         return ResponseEntity.ok().body(roleService.findByName(name));
+    }
+    @GetMapping("/")
+    public List<Role> findAll() {
+        return roleService.findAll();
     }
 }
