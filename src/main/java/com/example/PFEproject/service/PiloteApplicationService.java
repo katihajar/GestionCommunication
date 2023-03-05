@@ -6,6 +6,7 @@ import com.example.PFEproject.repo.ApplicationRepo;
 import com.example.PFEproject.repo.PiloteApplicationRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +29,14 @@ public class PiloteApplicationService {
         return piloteApplicationRepo.findByPiloteUsernameAndApplicationNomApplication(username, nomApp);
     }
 
+    public List<PiloteApplication> findByApplicationNomApplication(String nomApp) {
+        return piloteApplicationRepo.findByApplicationNomApplication(nomApp);
+    }
+
+    public List<PiloteApplication> findByPiloteUsername(String username) {
+        return piloteApplicationRepo.findByPiloteUsername(username);
+    }
+
     public List<PiloteApplication> saveAll(Application app, List<PiloteApplication> piloteApplications) {
         List<PiloteApplication> piloteApplicationList = new ArrayList<>();
         for (PiloteApplication pilote : piloteApplications) {
@@ -39,7 +48,7 @@ public class PiloteApplicationService {
         return piloteApplicationList;
     }
 
-    public PiloteApplication savePiloteApp(PiloteApplication pilote){
+    public PiloteApplication savePiloteApp(PiloteApplication pilote) throws Exception {
         PiloteApplication p = findByPiloteUsernameAndApplicationNomApplication(pilote.getPilote().getUsername(),pilote.getApplication().getNomApplication());
         if (p==null){
             piloteApplicationRepo.save(pilote);
@@ -47,9 +56,9 @@ public class PiloteApplicationService {
             Application app = applicationRepo.findByNomApplication(pilote.getApplication().getNomApplication());
             applicationRepo.save(app);
             app.getPiloteApplicationList().add(pp);
-            return null;
-        }else {
             return pilote;
+        }else {
+            throw new Exception();
         }
     }
 }

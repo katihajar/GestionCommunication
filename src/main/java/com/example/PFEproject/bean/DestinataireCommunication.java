@@ -24,6 +24,7 @@ public class DestinataireCommunication {
     private String email;
     @NonNull
     private String typeDest;
+    private String statutRespo;
 
     @ManyToOne
     private Application application;

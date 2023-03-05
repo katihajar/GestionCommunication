@@ -20,7 +20,9 @@ public class ApplicationService {
     @Autowired
     PiloteApplicationService piloteApplicationService;
 
-
+    public Application findApplicationById(Long id) {
+        return applicationRepo.findApplicationById(id);
+    }
 
     public int deleteApplicationById(Long id) {
         return applicationRepo.deleteApplicationById(id);
@@ -60,7 +62,7 @@ public class ApplicationService {
     }
 
     public Application updateApp(Application application){
-        Application app = findByNomApplication(application.getNomApplication());
+        Application app = findApplicationById(application.getId());
         app.setNomApplication(application.getNomApplication());
         app.setCharteIncident(application.getCharteIncident());
         app.setDisponibilite(application.getDisponibilite());

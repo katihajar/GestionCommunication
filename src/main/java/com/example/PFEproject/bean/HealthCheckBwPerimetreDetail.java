@@ -19,8 +19,8 @@ public class HealthCheckBwPerimetreDetail {
     private String comment;
     private String actionPlan;
     private boolean feedBack;
-    private double IncidentInProgress;
-    private double IncidentCompleted;
+    private double incidentInProgress;
+    private double incidentCompleted;
     @ManyToOne
     private Perimetre perimetre;
     @ManyToOne

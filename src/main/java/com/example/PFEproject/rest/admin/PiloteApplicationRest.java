@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,13 +20,14 @@ public class PiloteApplicationRest {
     @Autowired
     PiloteApplicationService piloteApplicationService;
 
-    @GetMapping("/{username}/{nomApp}")
+    @GetMapping("/piloteApp/{username}/{nomApp}")
     public PiloteApplication findByPiloteUsernameAndApplicationNomApplication(@PathVariable String username,@PathVariable String nomApp) {
         return piloteApplicationService.findByPiloteUsernameAndApplicationNomApplication(username, nomApp);
     }
     @PostMapping("/savePiloteApp")
-    public ResponseEntity<PiloteApplication> savePiloteApp(@RequestBody PiloteApplication pilote) {
+    public ResponseEntity<PiloteApplication> savePiloteApp(@RequestBody PiloteApplication pilote) throws Exception {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/admin/piloteapplication/savePiloteApp").toUriString());
         return ResponseEntity.created(uri).body(piloteApplicationService.savePiloteApp(pilote));
     }
+
 }

@@ -73,9 +73,8 @@ public class UserService implements UserDetailsService {
     }
 
     public User updateUser(User user, Long id){
-        User usr = findUserByUsername(user.getUsername());
+        User usr = findUserById(user.getId());
         if (usr == null) {
-
             return null;
         }else {
             Set<Role> authorities = new HashSet<>();
