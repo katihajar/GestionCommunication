@@ -30,4 +30,9 @@ public class PiloteApplicationRest {
         return ResponseEntity.created(uri).body(piloteApplicationService.savePiloteApp(pilote));
     }
 
+    @GetMapping("/app/{nomApp}")
+    public ResponseEntity<List<PiloteApplication>> findByApplicationNomApplication(@PathVariable String nomApp) {
+        return ResponseEntity.ok().body(piloteApplicationService.findByApplicationNomApplication(nomApp));
+    }
+
 }
