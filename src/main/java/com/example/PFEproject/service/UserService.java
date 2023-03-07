@@ -72,19 +72,25 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public User updateUser(User user, Long id){
+    public User updateUser(User user, Long id) throws Exception {
         User usr = findUserById(user.getId());
+        User usrExist = findUserByUsername(user.getUsername());
         if (usr == null) {
-            return null;
+            throw new Exception();
         }else {
-            Set<Role> authorities = new HashSet<>();
-            roleRepo.findById(id).ifPresent(authorities::add);
-            usr.setRoles(authorities);
-            usr.setNom(user.getNom());
-            usr.setLots(user.getLots());
-            usr.setPrenom(user.getPrenom());
-            usr.setUsername(user.getUsername());
-            return userRepository.save(usr);
+            if(usrExist == null) {
+                Set<Role> authorities = new HashSet<>();
+                roleRepo.findById(id).ifPresent(authorities::add);
+                usr.setRoles(authorities);
+                usr.setNom(user.getNom());
+                usr.setLots(user.getLots());
+                usr.setPrenom(user.getPrenom());
+                usr.setUsername(user.getUsername());
+                usr.setPassword(user.getPassword());
+                return userRepository.save(usr);
+            }else {
+                throw new Exception();
+            }
         }
     }
     public User setRole(String username, Long id){

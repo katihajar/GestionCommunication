@@ -42,8 +42,9 @@ public class UserREST {
         return ResponseEntity.created(uri).body(userService.saveUser(us,userRole.getIdRole()));
     }
     @PutMapping("/UpdateUser")
-    public ResponseEntity<User> updateUser(@RequestBody UserRole userRole) {
+    public ResponseEntity<User> updateUser(@RequestBody UserRole userRole) throws Exception {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/admin/users/UpdateUser").toUriString());
+        userRole.getUser().setPassword(passwordEncoder.encode(userRole.getUser().getPassword()));
         return ResponseEntity.created(uri).body(userService.updateUser(userRole.getUser(), userRole.getIdRole()));
     }
 
