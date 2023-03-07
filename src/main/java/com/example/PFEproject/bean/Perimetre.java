@@ -20,7 +20,7 @@ public class Perimetre {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NonNull
-    @Size(min = 3, max = 100)
+    @Size(min = 1, max = 100)
     private String titre;
     @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "perimetre")

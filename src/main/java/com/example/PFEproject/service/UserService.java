@@ -78,7 +78,7 @@ public class UserService implements UserDetailsService {
         if (usr == null) {
             throw new Exception();
         }else {
-            if(usrExist == null) {
+            if(usrExist ==null ||  usrExist.getId() == usr.getId()) {
                 Set<Role> authorities = new HashSet<>();
                 roleRepo.findById(id).ifPresent(authorities::add);
                 usr.setRoles(authorities);
