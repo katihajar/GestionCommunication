@@ -58,12 +58,13 @@ public class AuthREST {
 
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@RequestBody TokenDTO dto) {
+    public ResponseEntity<?> logout(@RequestBody TokenDTO dto, HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         String refreshTokenString = dto.getRefreshToken();
         if (jwtHelper.validateRefreshToken(refreshTokenString) && refreshTokenRepository.existsById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString))) {
             // valid and exists in db
             refreshTokenRepository.deleteById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString));
             System.out.println(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString));
+            new SecurityContextLogoutHandler().logout(request, response, authentication);
             return ResponseEntity.ok().build();
         }
 
