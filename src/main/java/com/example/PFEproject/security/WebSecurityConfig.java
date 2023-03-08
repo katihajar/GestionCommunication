@@ -57,6 +57,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/pilote/**").hasAnyAuthority("ROLE_PILOTE")
                 .anyRequest().authenticated()
                 .and().httpBasic();
+        http.logout().logoutUrl("/api/auth/logout").logoutSuccessUrl("/");
         http.addFilterBefore(accessTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

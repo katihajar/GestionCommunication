@@ -1,7 +1,5 @@
 package com.example.PFEproject.bean;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -13,9 +11,10 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
-@Data
-@NoArgsConstructor
+
 @AllArgsConstructor
+@NoArgsConstructor
+@Data
 @Entity
 public class Incident {
     @Id
@@ -27,12 +26,10 @@ public class Incident {
     @NonNull
     private String statut;
     private String numeroIncident;
-    @JsonFormat(pattern="dd-MM-yyyy")
     private Date dateDebut;
-    @JsonFormat(pattern="dd-MM-yyyy")
     private Date dateFin;
     @NonNull
-    @Size(min = 3, max = 100)
+    @Size(min = 3, max = 1000)
     private String description;
     @NonNull
     @Size(min = 3, max = 1000)
@@ -45,15 +42,14 @@ public class Incident {
     @Size(min = 0, max = 1000)
     private String solutionContournement;
     @NonNull
-    @JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss")
     private Date prochaineCommunication;
-    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy="incident")
-    private List<PlanAction> planActions;
     @ManyToOne
     private User createurIncident;
     @ManyToOne
     private Application application;
 
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy="incident")
+    private List<PlanAction> planActionList;
 
 }

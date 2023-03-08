@@ -8,8 +8,8 @@ import lombok.NonNull;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 public class PlanAction {
@@ -21,7 +21,7 @@ public class PlanAction {
     @NonNull
     private String statut;
     @NonNull
-    @Size(min = 3, max = 100)
+    @Size(min = 3, max = 1000)
     private String description;
     @ManyToOne
     private Incident incident;

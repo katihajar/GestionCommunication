@@ -1,6 +1,5 @@
 package com.example.PFEproject.bean;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,8 +9,8 @@ import lombok.NonNull;
 import javax.persistence.*;
 import java.util.List;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Entity
 public class Application {
