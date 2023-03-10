@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import java.net.URI;
 import java.util.List;
 
@@ -33,7 +32,6 @@ public class IncidentRestPilote {
 
     @PostMapping("/save")
     public ResponseEntity<Incident> save(@RequestBody Incident incident) throws Exception {
-        System.out.println("Incident "+ JSON.toString(incident));
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/pilote/incident/save").toUriString());
         return ResponseEntity.created(uri).body(incidentService.save(incident));
     }

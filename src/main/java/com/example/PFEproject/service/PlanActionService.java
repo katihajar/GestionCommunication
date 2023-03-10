@@ -37,9 +37,13 @@ public class PlanActionService {
         System.out.println("Plan save");
         for (PlanAction action : planActions) {
             System.out.println("Plan for");
+            PlanAction act = new PlanAction();
             PlanAction action2 ;
-            action.setIncident(in);
-            action2= planActionRepo.save(action);
+            act.setIncident(in);
+            act.setNumero(action.getNumero());
+            act.setDescription(action.getDescription());
+            act.setStatut(action.getStatut());
+            action2= planActionRepo.save(act);
             PlanActionList.add(action2);
         }
         return PlanActionList;
