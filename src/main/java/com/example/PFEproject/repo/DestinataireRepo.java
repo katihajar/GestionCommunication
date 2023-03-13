@@ -12,4 +12,7 @@ public interface DestinataireRepo extends JpaRepository<DestinataireCommunicatio
 
     List<DestinataireCommunication> findDestinataireCommunicationByApplicationId(Long id);
     DestinataireCommunication findByEmail(String email);
+    DestinataireCommunication findDestinataireCommunicationById(Long id);
+    DestinataireCommunication findByEmailAndApplicationNomApplication(String email,String nom);
+
 }

@@ -35,7 +35,7 @@ public class DestinataireService {
     }
 
     public DestinataireCommunication save(DestinataireCommunication entity) throws Exception{
-        DestinataireCommunication des = findByEmail(entity.getEmail());
+        DestinataireCommunication des = findByEmailAndApplicationNomApplication(entity.getEmail(),entity.getApplication().getNomApplication());
         if(des == null){
                entity.setStatutRespo("En Attente");
         return destinataireRepo.save(entity);
@@ -44,8 +44,16 @@ public class DestinataireService {
         }
     }
 
+    public DestinataireCommunication findByEmailAndApplicationNomApplication(String email, String nom) {
+        return destinataireRepo.findByEmailAndApplicationNomApplication(email, nom);
+    }
+
+    public DestinataireCommunication findDestinataireCommunicationById(Long id) {
+        return destinataireRepo.findDestinataireCommunicationById(id);
+    }
+
     public DestinataireCommunication validationResponsable(DestinataireCommunication entity) throws Exception{
-        DestinataireCommunication des = findByEmail(entity.getEmail());
+        DestinataireCommunication des = findDestinataireCommunicationById(entity.getId());
         if (des == null){
             throw new Exception();
         }else {
