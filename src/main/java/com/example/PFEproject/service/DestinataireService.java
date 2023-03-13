@@ -30,9 +30,7 @@ public class DestinataireService {
         return destinataireRepo.findAll();
     }
 
-    public DestinataireCommunication findByEmail(String email) {
-        return destinataireRepo.findByEmail(email);
-    }
+
 
     public DestinataireCommunication save(DestinataireCommunication entity) throws Exception{
         DestinataireCommunication des = findByEmailAndApplicationNomApplication(entity.getEmail(),entity.getApplication().getNomApplication());

@@ -6,12 +6,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import java.util.*;
 
 @RequiredArgsConstructor
@@ -27,7 +25,7 @@ public class IncidentService {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    public void sendEmailWithDelay(Date date, String to, String subject, String text) throws MessagingException {
+    public void sendEmailWithDelay(Date date, String to, String subject, String text) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         calendar.add(Calendar.MINUTE, -15);
@@ -55,9 +53,6 @@ public class IncidentService {
         return incidentRepo.findByCreateurIncidentUsername(username);
     }
 
-    public Incident findByTitreIncident(String title) {
-        return incidentRepo.findByTitreIncident(title);
-    }
 
     public int deleteIncidentById(Long id) {
         int r2=planActionService.deletePlanActionByIncidentId(id);
