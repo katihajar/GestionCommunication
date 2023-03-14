@@ -24,10 +24,10 @@ public class Operation {
     @NonNull
     private String statut;
     @Size(min = 0, max = 60)
-    private String Numero;
+    private String numero;
     @NonNull
     @Size(min = 3, max = 1000)
-    private String Description;
+    private String description;
     @JsonFormat(pattern="yyyy-MM-dd")
     private Date dateDebut;
     @JsonFormat(pattern="yyyy-MM-dd")
