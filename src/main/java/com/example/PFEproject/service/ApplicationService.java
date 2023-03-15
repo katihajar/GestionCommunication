@@ -20,6 +20,10 @@ public class ApplicationService {
     @Autowired
     PiloteApplicationService piloteApplicationService;
 
+    public List<Application> findByResponsableId(Long id) {
+        return applicationRepo.findByResponsableId(id);
+    }
+
     public Application findApplicationById(Long id) {
         return applicationRepo.findApplicationById(id);
     }
@@ -42,7 +46,6 @@ public class ApplicationService {
                 Application appli = new Application();
                 appli.setNomApplication(application.getNomApplication());
                 appli.setCharteIncident(application.getCharteIncident());
-                appli.setVersion(application.getVersion());
                 appli.setLot(application.getLot());
                 appli.setDisponibilite(application.getDisponibilite());
                 appli.setResponsable(application.getResponsable());
@@ -66,7 +69,6 @@ public class ApplicationService {
         app.setNomApplication(application.getNomApplication());
         app.setCharteIncident(application.getCharteIncident());
         app.setDisponibilite(application.getDisponibilite());
-        app.setVersion(application.getVersion());
         return applicationRepo.save(app);
     }
 }

@@ -60,4 +60,13 @@ public class DestinataireService {
         }
     }
 
+    public DestinataireCommunication RetirerDest(DestinataireCommunication entity) throws Exception{
+        DestinataireCommunication des = findDestinataireCommunicationById(entity.getId());
+        if (des == null){
+            throw new Exception();
+        }else {
+            des.setStatutRespo("En Attente");
+            return destinataireRepo.save(des);
+        }
+    }
 }

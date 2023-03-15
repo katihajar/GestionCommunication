@@ -34,9 +34,7 @@ public class PlanActionService {
 
     public  List<PlanAction> saveAllAction(Incident in, List<PlanAction> planActions) {
         List<PlanAction> PlanActionList= new ArrayList<>();
-        System.out.println("Plan save");
         for (PlanAction action : planActions) {
-            System.out.println("Plan for");
             PlanAction act = new PlanAction();
             PlanAction action2 ;
             act.setIncident(in);

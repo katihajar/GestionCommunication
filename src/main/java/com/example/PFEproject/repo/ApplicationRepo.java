@@ -10,7 +10,7 @@ import java.util.List;
 public interface ApplicationRepo extends JpaRepository<Application, Long> {
     Application findByNomApplication(String nom);
     Application findApplicationById(Long id);
-    List<Application> findByResponsableUsername(String username);
+    List<Application> findByResponsableId(Long id);
 
     int deleteApplicationById(Long id);
 }

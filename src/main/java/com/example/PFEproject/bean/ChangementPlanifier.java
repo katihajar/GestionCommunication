@@ -24,14 +24,18 @@ public class ChangementPlanifier {
     @Size(min = 3, max = 100)
     private String titre;
     @NonNull
+    @Size(min = 3, max = 1000)
+    private String detail;
+    @NonNull
     @Size(min = 3, max = 100)
     private String statut;
     @NonNull
-    @Size(min = 3, max = 500)
+    @Size(min = 0, max = 100)
+    private String version;
+    @NonNull
+    @Size(min = 3, max = 1000)
     private String impactMetier;
-    @JsonFormat(pattern="dd-MM-yyyy")
     private Date dateDebut;
-    @JsonFormat(pattern="dd-MM-yyyy")
     private Date dateFin;
     @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "changementPlanifier")
@@ -39,5 +43,5 @@ public class ChangementPlanifier {
     @ManyToOne
     private Application application;
     @ManyToOne
-    private User createurChengement;
+    private User createurChangement;
 }

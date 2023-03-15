@@ -10,4 +10,6 @@ public interface IncidentRepo extends JpaRepository<Incident, Long> {
     List<Incident> findByCreateurIncidentUsername(String username);
     Incident findByTitreIncident(String title);
     int deleteIncidentById(Long id);
+    List<Incident> findByApplicationResponsableId(Long id);
+
 }

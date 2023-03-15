@@ -19,8 +19,6 @@ public class Application {
     private Long id;
     @NonNull
     private String nomApplication;
-    @NonNull
-    private String version;
     @ManyToOne
     private User responsable;
     @NonNull

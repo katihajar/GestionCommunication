@@ -29,7 +29,6 @@ public class IncidentService {
         calendar.setTime(date);
         calendar.add(Calendar.MINUTE, -15);
         Date delayDate = calendar.getTime();
-
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             public void run() {
@@ -52,6 +51,9 @@ public class IncidentService {
         return incidentRepo.findByCreateurIncidentUsername(username);
     }
 
+    public List<Incident> findByApplicationResponsableId(Long id) {
+        return incidentRepo.findByApplicationResponsableId(id);
+    }
 
     public int deleteIncidentById(Long id) {
         int r2=planActionService.deletePlanActionByIncidentId(id);
@@ -79,13 +81,10 @@ public class IncidentService {
             Incident incident1 = incidentRepo.save(incidentSave);
             if(incident1.getProchaineCommunication()!=null){
                 String email = incident1.getCreateurIncident().getUsername()+"@cgi.com";
-                System.out.println(email);
-                String text = "Il vous reste 15min pour la prochaine Comunication de l'incident : "+incident1.getTitreIncident()+".";
-                System.out.println(text);
+                String text = " Il vous reste 15min pour la prochaine Comunication de l'incident : "+incident1.getTitreIncident()+".";
                 sendEmailWithDelay(incident1.getProchaineCommunication(),email,"Rappel Incident",text);
             }
             if (incident.getPlanActionList() != null) {
-                System.out.println("Plan test");
                 planActionService.saveAllAction(incident1, incident.getPlanActionList());
             }
             return incident1;

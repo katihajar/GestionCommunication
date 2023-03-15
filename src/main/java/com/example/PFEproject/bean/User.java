@@ -46,7 +46,7 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "responsable")
     private List<Application> applicationList;
     @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "createurChengement")
+    @OneToMany(mappedBy = "createurChangement")
     private List<ChangementPlanifier> changementPlanifierList;
     @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "createurPointVersion")
