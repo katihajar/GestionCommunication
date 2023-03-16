@@ -3,7 +3,6 @@ package com.example.PFEproject.rest;
 import com.example.PFEproject.bean.RefreshToken;
 import com.example.PFEproject.bean.User;
 import com.example.PFEproject.dto.LoginDTO;
-import com.example.PFEproject.dto.SignupDTO;
 import com.example.PFEproject.dto.TokenDTO;
 import com.example.PFEproject.jwt.JwtHelper;
 import com.example.PFEproject.repo.RefreshTokenRepository;
@@ -16,11 +15,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -56,20 +55,29 @@ public class AuthREST {
         return ResponseEntity.ok(new TokenDTO(user1, accessToken, refreshTokenString));
     }
 
-
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(@RequestBody TokenDTO dto, HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+    public ResponseEntity<?> logout(@RequestBody TokenDTO dto,HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         String refreshTokenString = dto.getRefreshToken();
-        if (jwtHelper.validateRefreshToken(refreshTokenString) && refreshTokenRepository.existsById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString))) {
-            // valid and exists in db
+
+        if (refreshTokenString != null && jwtHelper.validateRefreshToken(refreshTokenString) && refreshTokenRepository.existsById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString))) {
             refreshTokenRepository.deleteById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString));
+            SecurityContextHolder.clearContext();
+            Cookie accessTokenCookie = new Cookie("access_token", null);
+            accessTokenCookie.setHttpOnly(true);
+            accessTokenCookie.setMaxAge(0);
+            accessTokenCookie.setPath("/");
+            response.addCookie(accessTokenCookie);
+            Cookie refreshTokenCookie = new Cookie("refresh_token", null);
+            refreshTokenCookie.setHttpOnly(true);
+            refreshTokenCookie.setMaxAge(0);
+            refreshTokenCookie.setPath("/");
+            response.addCookie(refreshTokenCookie);
             new SecurityContextLogoutHandler().logout(request, response, authentication);
             return ResponseEntity.ok().build();
         }
 
-        throw new BadCredentialsException("invalid token");
+        throw new BadCredentialsException("Invalid or missing refresh token");
     }
-
     @PostMapping("/logoutAll")
     public ResponseEntity<?> logoutAll() {
             // valid and exists in db
