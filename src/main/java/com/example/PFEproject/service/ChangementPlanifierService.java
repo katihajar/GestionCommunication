@@ -25,6 +25,10 @@ public class ChangementPlanifierService {
         return changementPlanifierRepo.findByCreateurChangementId(id);
     }
 
+    public List<ChangementPlanifier> findByApplicationResponsableId(Long id) {
+        return changementPlanifierRepo.findByApplicationResponsableId(id);
+    }
+
     public int deleteChangementPlanifierById(Long id) {
         int r1= contenuChangementService.deletePlanActionByChangementPlanifierId(id);
         int r2 = changementPlanifierRepo.deleteChangementPlanifierById(id);

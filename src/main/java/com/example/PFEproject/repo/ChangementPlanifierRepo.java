@@ -10,5 +10,6 @@ import java.util.List;
 @Repository
 public interface ChangementPlanifierRepo extends JpaRepository<ChangementPlanifier,Long> {
     List<ChangementPlanifier> findByCreateurChangementId(Long id);
+    List<ChangementPlanifier> findByApplicationResponsableId(Long id);
     int deleteChangementPlanifierById(Long id);
 }

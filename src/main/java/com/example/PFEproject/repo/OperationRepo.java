@@ -10,4 +10,5 @@ import java.util.List;
 public interface OperationRepo extends JpaRepository<Operation,Long> {
     int deleteOperationById(Long id);
     List<Operation> findByCreateurOperationId(Long id);
+    List<Operation> findByApplicationResponsableId(Long id);
 }

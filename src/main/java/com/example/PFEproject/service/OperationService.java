@@ -26,6 +26,10 @@ public class OperationService {
         return operationRepo.findAll();
     }
 
+    public List<Operation> findByApplicationResponsableId(Long id) {
+        return operationRepo.findByApplicationResponsableId(id);
+    }
+
     public List<Operation> findByCreateurOperationId(Long id) {
         return operationRepo.findByCreateurOperationId(id);
     }
