@@ -22,16 +22,17 @@ public class HealthChekPreprodProd {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NonNull
-    @Size(min = 3, max = 100)
+    @Size(min = 3, max = 200)
     private String titre;
     @NonNull
-    @JsonFormat(pattern="dd-MM-yyyy")
     private Date dateAjout;
     @NonNull
     private String type;
 
-    @ManyToOne
-    private EtatProcessusMetier etatProcessusMetier;
+
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "healthChekPreprodProd")
+    private List<EtatProcessusMetier> etatProcessusMetierList;
     @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "healthChekPreprodProd")
     List<HealthChekPreprodProdDetail> healthChekPreprodProdDetailList;

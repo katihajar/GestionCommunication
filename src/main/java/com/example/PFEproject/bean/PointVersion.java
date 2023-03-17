@@ -20,19 +20,19 @@ public class PointVersion {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NonNull
-    @Size(min = 3, max = 100)
+    @Size(min = 1, max = 100)
     private String titre;
     @NonNull
     @Size(min = 3, max = 500)
     private String lienComment;
     @NonNull
-    @Size(min = 3, max = 100)
+    @Size(min = 1, max = 200)
     private String GoNoGoTNR;
     @NonNull
-    @Size(min = 3, max = 100)
+    @Size(min = 1, max = 200)
     private String GoNoGoMEP;
     @NonNull
-    @Size(min = 3, max = 300)
+    @Size(min = 1, max = 1000)
     private String remarque;
     @ManyToOne
     private Application application;

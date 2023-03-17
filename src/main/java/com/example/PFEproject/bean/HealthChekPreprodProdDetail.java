@@ -20,32 +20,34 @@ public class HealthChekPreprodProdDetail {
     private Long id;
     @ManyToOne
     private Application application;
-    @JsonFormat(pattern="dd-MM-yyyy")
     private Date dateDebut;
-    @JsonFormat(pattern="dd-MM-yyyy")
     private Date dateFin;
     @NonNull
     private String statut;
     @NonNull
     private String feu;
     @NonNull
-    private boolean impactClient;
+    @Size(min = 3, max = 500)
+    private String impactClient;
     @NonNull
+    @Size(min = 3, max = 500)
+    private String processus;
+    @NonNull
+    @Size(min = 3, max = 500)
     private String impactMetier;
     @NonNull
-    @Size(min = 3, max = 200)
+    @Size(min = 3, max = 500)
     private String cause;
     @NonNull
-    @Size(min = 3, max = 100)
+    @Size(min = 3, max = 1000)
     private String planAction;
     @NonNull
-    @Size(min = 3, max = 600)
+    @Size(min = 3, max = 1000)
     private String information;
     @NonNull
-    @Size(min = 3, max = 600)
+    @Size(min = 3, max = 1000)
     private String problemeTechnique;
-
     @ManyToOne
-    HealthChekPreprodProd healthChekPreprodProd;
+    private HealthChekPreprodProd healthChekPreprodProd;
 
 }
