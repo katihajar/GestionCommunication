@@ -17,8 +17,7 @@ public class HealthCheckBwPerimetreDetail {
     private String statusNightTreatment;
     private String statusDataIntegrity;
     private String comment;
-    private String actionPlan;
-    private boolean feedBack;
+    private String feedBack;
     private double incidentInProgress;
     private double incidentCompleted;
     @ManyToOne

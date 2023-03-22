@@ -48,6 +48,7 @@ public class HealthChekPreprodProdDetailService {
             healthcheck.setProblemeTechnique(health.getProblemeTechnique());
             healthcheck.setPlanAction(health.getPlanAction());
             healthcheck.setStatut(health.getStatut());
+            healthcheck.setProcessus(health.getProcessus());
             HealthChekPreprodProdDetail healthcheck2= healthChekPreprodProdDetailRepo.save(healthcheck);
             healthChekPreprodProdDetailList.add(healthcheck2);
         }

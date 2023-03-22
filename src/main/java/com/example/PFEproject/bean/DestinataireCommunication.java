@@ -29,5 +29,4 @@ public class DestinataireCommunication {
     @ManyToOne
     private Application application;
 
-
 }

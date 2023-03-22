@@ -22,13 +22,17 @@ public class HealthChekPreprodProdService {
     @Autowired
     EtatProcessusMetierService etatProcessusMetierService;
 
+    public List<HealthChekPreprodProd> findAll() {
+        return healthChekPreprodProdRepo.findAll();
+    }
+
     public List<HealthChekPreprodProd> findByCreateurHealthChekPreprodProdId(Long id) {
         return healthChekPreprodProdRepo.findByCreateurHealthChekPreprodProdId(id);
     }
 
     public int deleteHealthChekPreprodProdById(Long id) {
         int r1 = etatProcessusMetierService.deleteByHealthChekPreprodProdId(id);
-        int r2 = healthChekPreprodProdDetailService.deleteHealthChekPreprodProdDetailById(id);
+        int r2 = healthChekPreprodProdDetailService.deleteByHealthChekPreprodProdId(id);
         int r3 =healthChekPreprodProdRepo.deleteHealthChekPreprodProdById(id);
         return r1+r2+r3;
     }
