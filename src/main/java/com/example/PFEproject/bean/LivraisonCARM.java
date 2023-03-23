@@ -19,12 +19,11 @@ public class LivraisonCARM {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NonNull
-    @Size(min = 3, max = 60)
+    @Size(min = 1, max = 60)
     private String statutMEI;
     @NonNull
-    private double NombreTicket;
+    private double nombreTicket;
     @NonNull
-    @JsonFormat(pattern="yyyy-MM-dd")
     private Date dateMEI;
     @ManyToOne
     private PointVersion pointVersion;

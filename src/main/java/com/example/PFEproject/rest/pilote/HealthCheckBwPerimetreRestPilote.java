@@ -19,10 +19,7 @@ import java.util.List;
 public class HealthCheckBwPerimetreRestPilote {
     @Autowired
     HealthCheckBwPerimetreService healthCheckBwPerimetreService;
-    @GetMapping("/findAll")
-    public ResponseEntity<List<HealthCheckBwPerimetre>> findAll() {
-        return ResponseEntity.ok().body(healthCheckBwPerimetreService.findAll());
-    }
+
     @GetMapping("/user/{id}")
     public ResponseEntity<List<HealthCheckBwPerimetre>> findByCreateurHealthCheckBwPerimetreId(@PathVariable Long id) {
         return ResponseEntity.ok().body(healthCheckBwPerimetreService.findByCreateurHealthCheckBwPerimetreId(id));

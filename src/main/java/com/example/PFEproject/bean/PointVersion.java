@@ -9,6 +9,7 @@ import lombok.NonNull;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
+import java.util.Date;
 import java.util.List;
 
 @NoArgsConstructor
@@ -23,19 +24,27 @@ public class PointVersion {
     @Size(min = 1, max = 100)
     private String titre;
     @NonNull
-    @Size(min = 3, max = 500)
+    @Size(min = 1, max = 100)
+    private String version;
+    @NonNull
+    @Size(min = 0, max = 2000)
     private String lienComment;
     @NonNull
     @Size(min = 1, max = 200)
-    private String GoNoGoTNR;
+    private String goNoGoTNR;
     @NonNull
     @Size(min = 1, max = 200)
-    private String GoNoGoMEP;
+    private String goNoGoMEP;
     @NonNull
-    @Size(min = 1, max = 1000)
+    @Size(min = 0, max = 2000)
     private String remarque;
+    @NonNull
+    @Size(min = 0, max = 1000)
+    private String ticketConfirmer;
     @ManyToOne
     private Application application;
+    @NonNull
+    private Date dateAjout;
     @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "pointVersion")
     private List<LivraisonCARM> livraisonCARMList;
@@ -50,5 +59,4 @@ public class PointVersion {
     private String imageType;
     private long imageSize;
     private byte[] image;
-
 }
