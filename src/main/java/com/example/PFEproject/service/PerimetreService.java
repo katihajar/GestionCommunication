@@ -30,9 +30,7 @@ public class PerimetreService {
         return perimetreRepo.findAll();
     }
 
-    public Perimetre findPerimetreByIdAndTitre(Long id, String titre) {
-        return perimetreRepo.findPerimetreByIdAndTitre(id, titre);
-    }
+
 
     public  Perimetre save(Perimetre perimetre) throws Exception{
         Perimetre pmtr = findByTitre(perimetre.getTitre());

@@ -28,7 +28,7 @@ public class RoleService {
 
     public Role saveRole(Role role){
         Role r = findByName(role.getName());
-        if (r == null) {
+        if(r == null) {
             return roleRepo.save(role);
         }else {
             return r;

@@ -1,6 +1,5 @@
 package com.example.PFEproject.bean;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,7 +26,7 @@ public class PointVersion {
     @Size(min = 1, max = 100)
     private String version;
     @NonNull
-    @Size(min = 0, max = 2000)
+    @Size( max = 2000)
     private String lienComment;
     @NonNull
     @Size(min = 1, max = 200)
@@ -36,10 +35,10 @@ public class PointVersion {
     @Size(min = 1, max = 200)
     private String goNoGoMEP;
     @NonNull
-    @Size(min = 0, max = 2000)
+    @Size( max = 2000)
     private String remarque;
     @NonNull
-    @Size(min = 0, max = 1000)
+    @Size( max = 1000)
     private String ticketConfirmer;
     @ManyToOne
     private Application application;

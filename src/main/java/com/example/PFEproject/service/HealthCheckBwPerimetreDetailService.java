@@ -2,8 +2,6 @@ package com.example.PFEproject.service;
 
 import com.example.PFEproject.bean.HealthCheckBwPerimetre;
 import com.example.PFEproject.bean.HealthCheckBwPerimetreDetail;
-import com.example.PFEproject.bean.HealthChekPreprodProd;
-import com.example.PFEproject.bean.HealthChekPreprodProdDetail;
 import com.example.PFEproject.repo.HealthCheckBwPerimetreDetailRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

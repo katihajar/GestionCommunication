@@ -1,7 +1,5 @@
 package com.example.PFEproject.service;
 
-import com.example.PFEproject.bean.HealthCheckBwPerimetre;
-import com.example.PFEproject.bean.HealthCheckBwPerimetreDetail;
 import com.example.PFEproject.bean.LivraisonCARM;
 import com.example.PFEproject.bean.PointVersion;
 import com.example.PFEproject.repo.LivraisonCARMRepo;

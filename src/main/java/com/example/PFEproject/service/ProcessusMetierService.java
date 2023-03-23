@@ -1,6 +1,5 @@
 package com.example.PFEproject.service;
 
-import com.example.PFEproject.bean.Perimetre;
 import com.example.PFEproject.bean.ProcessusMetier;
 import com.example.PFEproject.repo.ProcessusMetierRepo;
 import lombok.AllArgsConstructor;

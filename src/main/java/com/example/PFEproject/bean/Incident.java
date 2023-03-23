@@ -34,12 +34,12 @@ public class Incident {
     @NonNull
     @Size(min = 3, max = 1000)
     private String situationActuelle;
-    @Size(min = 0, max = 1000)
+    @Size( max = 1000)
     private String impact;
     @NonNull
     @Size(min = 3, max = 1000)
     private String causePrincipale;
-    @Size(min = 0, max = 1000)
+    @Size( max = 1000)
     private String solutionContournement;
     @NonNull
     private Date prochaineCommunication;

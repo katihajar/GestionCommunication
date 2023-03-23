@@ -2,8 +2,6 @@ package com.example.PFEproject.service;
 
 import com.example.PFEproject.bean.EtatProcessusMetier;
 import com.example.PFEproject.bean.HealthChekPreprodProd;
-import com.example.PFEproject.bean.Incident;
-import com.example.PFEproject.bean.PlanAction;
 import com.example.PFEproject.repo.EtatProcessusMetierRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
