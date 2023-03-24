@@ -1,5 +1,6 @@
 package com.example.PFEproject.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -57,7 +58,7 @@ public class User implements UserDetails {
     @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "createurHealthCheckBwPerimetre")
     private List<HealthCheckBwPerimetre> healthCheckBwPerimetreList;
-
+    @JsonIgnore
     @Override
     public Collection<Role> getAuthorities() {
         return roles;

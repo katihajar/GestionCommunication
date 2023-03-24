@@ -1,5 +1,6 @@
 package com.example.PFEproject.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,6 +24,7 @@ public class PlanningPointVersion {
     @Size(min = 3, max = 500)
     private String description;
 
+    @JsonIgnore
     @ManyToOne
     private PointVersion pointVersion;
 }

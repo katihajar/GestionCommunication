@@ -1,5 +1,6 @@
 package com.example.PFEproject.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,8 +23,7 @@ public class Role implements GrantedAuthority {
     private Long id;
     @NonNull
     private String name;
-
-
+    @JsonIgnore
     @Override
     public String getAuthority() {
         return name;

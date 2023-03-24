@@ -25,4 +25,8 @@ public class ApplicationRestRepo {
     public ResponseEntity<List<Application>> findByResponsableId(@PathVariable Long id) {
         return ResponseEntity.ok().body(applicationService.findByResponsableId(id));
     }
+    @GetMapping("/AllApp")
+    public ResponseEntity<List<Application>> findAll() {
+        return ResponseEntity.ok().body(applicationService.findAll());
+    }
 }

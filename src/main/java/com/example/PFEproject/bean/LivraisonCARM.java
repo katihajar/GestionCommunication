@@ -1,5 +1,6 @@
 package com.example.PFEproject.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class LivraisonCARM {
     private double nombreTicket;
     @NonNull
     private Date dateMEI;
+    @JsonIgnore
     @ManyToOne
     private PointVersion pointVersion;
 

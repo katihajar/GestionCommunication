@@ -1,5 +1,6 @@
 package com.example.PFEproject.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -56,6 +57,7 @@ public class PointVersion {
     @ManyToOne
     private User createurPointVersion;
     private String imageType;
+    private String imageName;
     private long imageSize;
     private byte[] image;
 }

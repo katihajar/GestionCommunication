@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -40,7 +41,7 @@ public class PointVersionService {
         return r1+r2+r3+r4;
     }
 
-    public PointVersion save(PointVersion pointVersion) throws Exception{
+    public PointVersion save(PointVersion pointVersion,MultipartFile upload) throws Exception{
         if(pointVersion != null) {
             PointVersion point = new PointVersion();
             point.setTitre(pointVersion.getTitre());
@@ -53,6 +54,10 @@ public class PointVersionService {
             point.setCreateurPointVersion(pointVersion.getCreateurPointVersion());
             point.setDateAjout(pointVersion.getDateAjout());
             point.setTicketConfirmer(pointVersion.getTicketConfirmer());
+            point.setImageName(upload.getOriginalFilename());
+            point.setImageSize(upload.getSize());
+            point.setImageType(upload.getContentType());
+            point.setImage(upload.getBytes());
             PointVersion point1 = pointVersionRepo.save(point);
             if(pointVersion.getLivraisonCARMList() !=null){
                 livraisonCARMService.saveAll(point1,pointVersion.getLivraisonCARMList());
@@ -74,5 +79,38 @@ public class PointVersionService {
             throw new Exception();
         }
     }
-
+// public PointVersion save(PointVersion pointVersion) throws Exception{
+//        if(pointVersion != null) {
+//            PointVersion point = new PointVersion();
+//            point.setTitre(pointVersion.getTitre());
+//            point.setVersion(pointVersion.getVersion());
+//            point.setApplication(pointVersion.getApplication());
+//            point.setGoNoGoMEP(pointVersion.getGoNoGoMEP());
+//            point.setGoNoGoTNR(pointVersion.getGoNoGoTNR());
+//            point.setRemarque(pointVersion.getRemarque());
+//            point.setLienComment(pointVersion.getLienComment());
+//            point.setCreateurPointVersion(pointVersion.getCreateurPointVersion());
+//            point.setDateAjout(pointVersion.getDateAjout());
+//            point.setTicketConfirmer(pointVersion.getTicketConfirmer());
+//            PointVersion point1 = pointVersionRepo.save(point);
+//            if(pointVersion.getLivraisonCARMList() !=null){
+//                livraisonCARMService.saveAll(point1,pointVersion.getLivraisonCARMList());
+//            }else{
+//                System.out.println("aucune livraison Ajouter");
+//            }
+//            if(pointVersion.getTicketList() !=null){
+//                ticketService.saveAll(point1,pointVersion.getTicketList());
+//            }else{
+//                System.out.println("aucun Ticket Ajouter");
+//            }
+//            if(pointVersion.getPlanningPointVersionList() !=null){
+//                planningPointVersionService.saveAll(point1,pointVersion.getPlanningPointVersionList());
+//            }else{
+//                System.out.println("aucun planning Ajouter");
+//            }
+//            return point1;
+//        }else {
+//            throw new Exception();
+//        }
+//    }
 }
