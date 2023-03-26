@@ -104,4 +104,5 @@ public class JwtHelper {
     public Long getTokenIdFromRefreshToken(String token) {
         return decodeRefreshToken(token).get().getClaim("tokenId").asLong();
     }
+
 }

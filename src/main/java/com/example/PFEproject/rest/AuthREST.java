@@ -41,43 +41,27 @@ public class AuthREST {
     @PostMapping("/login")
     @Transactional
     public ResponseEntity<?> login( @RequestBody LoginDTO dto) {
-        System.out.println(dto.getUsername());
-        System.out.println(dto.getPassword());
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         User user = (User) authentication.getPrincipal();
         RefreshToken refreshToken = new RefreshToken();
         refreshToken.setOwner(user);
-        refreshTokenRepository.save(refreshToken);
         User user1 = userRepository.findUserById(user.getId());
         String accessToken = jwtHelper.generateAccessToken(user);
         String refreshTokenString = jwtHelper.generateRefreshToken(user, refreshToken);
         return ResponseEntity.ok(new TokenDTO(user1, accessToken, refreshTokenString));
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<?> logout(@RequestBody TokenDTO dto,HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-        String refreshTokenString = dto.getRefreshToken();
-
-        if (refreshTokenString != null && jwtHelper.validateRefreshToken(refreshTokenString) && refreshTokenRepository.existsById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString))) {
-            refreshTokenRepository.deleteById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString));
-            SecurityContextHolder.clearContext();
-            Cookie accessTokenCookie = new Cookie("access_token", null);
-            accessTokenCookie.setHttpOnly(true);
-            accessTokenCookie.setMaxAge(0);
-            accessTokenCookie.setPath("/");
-            response.addCookie(accessTokenCookie);
-            Cookie refreshTokenCookie = new Cookie("refresh_token", null);
-            refreshTokenCookie.setHttpOnly(true);
-            refreshTokenCookie.setMaxAge(0);
-            refreshTokenCookie.setPath("/");
-            response.addCookie(refreshTokenCookie);
-            new SecurityContextLogoutHandler().logout(request, response, authentication);
-            return ResponseEntity.ok().build();
-        }
-
-        throw new BadCredentialsException("Invalid or missing refresh token");
-    }
+//    @PostMapping("/logout")
+//    public ResponseEntity<?> logout(@RequestBody TokenDTO dto,HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
+//        String refreshTokenString = dto.getRefreshToken();
+//        if (refreshTokenString != null && jwtHelper.validateRefreshToken(refreshTokenString) && refreshTokenRepository.existsById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString))) {
+//            refreshTokenRepository.deleteById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString));
+//            return ResponseEntity.ok().build();
+//        }
+//
+//        throw new BadCredentialsException("Invalid or missing refresh token");
+//    }
     @PostMapping("/logoutAll")
     public ResponseEntity<?> logoutAll() {
             // valid and exists in db
@@ -85,6 +69,10 @@ public class AuthREST {
             return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/logout-success")
+    public void sucess(){
+        System.out.println("success");
+    }
     @PostMapping("access-token")
     public ResponseEntity<?> accessToken(@RequestBody TokenDTO dto) {
         String refreshTokenString = dto.getRefreshToken();
