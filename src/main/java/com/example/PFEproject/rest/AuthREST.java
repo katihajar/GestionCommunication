@@ -89,16 +89,13 @@ public class AuthREST {
     @PostMapping("refresh-token")
     public ResponseEntity<?> refreshToken(@RequestBody TokenDTO dto) {
         String refreshTokenString = dto.getRefreshToken();
-        if (jwtHelper.validateRefreshToken(refreshTokenString) && refreshTokenRepository.existsById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString))) {
+        if (jwtHelper.validateRefreshToken(refreshTokenString) ) {
             // valid and exists in db
-            refreshTokenRepository.deleteById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString));
             User user = userService.findUserByUsername(jwtHelper.getUserUsernameFromRefreshToken(refreshTokenString));
             RefreshToken refreshToken = new RefreshToken();
             refreshToken.setOwner(user);
-            refreshTokenRepository.save(refreshToken);
             String accessToken = jwtHelper.generateAccessToken(user);
             String newRefreshTokenString = jwtHelper.generateRefreshToken(user, refreshToken);
-
             return ResponseEntity.ok(new TokenDTO(user, accessToken, newRefreshTokenString));
         }
 
