@@ -11,6 +11,7 @@ public interface DestinataireRepo extends JpaRepository<DestinataireCommunicatio
     int deleteDestinataireCommunicationById(Long id);
 
     List<DestinataireCommunication> findDestinataireCommunicationByApplicationId(Long id);
+    List<DestinataireCommunication> findByApplicationNomApplication(String nom);
     DestinataireCommunication findByEmail(String email);
     DestinataireCommunication findDestinataireCommunicationById(Long id);
     DestinataireCommunication findByEmailAndApplicationNomApplication(String email,String nom);

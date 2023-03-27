@@ -60,6 +60,10 @@ public class DestinataireService {
         }
     }
 
+    public List<DestinataireCommunication> findByApplicationNomApplication(String nom) {
+        return destinataireRepo.findByApplicationNomApplication(nom);
+    }
+
     public DestinataireCommunication RetirerDest(DestinataireCommunication entity) throws Exception{
         DestinataireCommunication des = findDestinataireCommunicationById(entity.getId());
         if (des == null){

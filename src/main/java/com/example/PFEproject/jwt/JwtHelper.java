@@ -30,7 +30,7 @@ public class JwtHelper {
     private JWTVerifier refreshTokenVerifier;
 
     public JwtHelper(@Value("${accessTokenSecret}") String accessTokenSecret, @Value("${refreshTokenSecret}") String refreshTokenSecret, @Value("${com.example.demo.refreshTokenExpirationDays}") int refreshTokenExpirationDays, @Value("${com.example.demo.accessTokenExpirationMinutes}") int accessTokenExpirationMinutes) {
-        accessTokenExpirationMs = (long) accessTokenExpirationMinutes * 60 * 1000;
+        accessTokenExpirationMs = (long) accessTokenExpirationMinutes * 40 * 1000;
         refreshTokenExpirationMs = (long) refreshTokenExpirationDays * 24 * 60 * 60 * 1000;
         accessTokenAlgorithm = Algorithm.HMAC512(accessTokenSecret);
         refreshTokenAlgorithm = Algorithm.HMAC512(refreshTokenSecret);
@@ -43,22 +43,27 @@ public class JwtHelper {
     }
 
     public String generateAccessToken(User user) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + accessTokenExpirationMs);
+
         return JWT.create()
                 .withIssuer(issuer)
                 .withSubject(user.getUsername())
-                .withIssuedAt(new Date())
-                .withExpiresAt(new Date(new Date().getTime() + accessTokenExpirationMs))
+                .withIssuedAt(now)
+                .withExpiresAt(expiryDate)
                 .withClaim("roles", user.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toList()))
                 .sign(accessTokenAlgorithm);
     }
 
     public String generateRefreshToken(User user, RefreshToken refreshToken) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + refreshTokenExpirationMs);
         return JWT.create()
                 .withIssuer(issuer)
                 .withSubject(user.getUsername())
                 .withClaim("tokenId", refreshToken.getId())
-                .withIssuedAt(new Date())
-                .withExpiresAt(new Date((new Date()).getTime() + refreshTokenExpirationMs))
+                .withIssuedAt(now)
+                .withExpiresAt(expiryDate)
                 .sign(refreshTokenAlgorithm);
     }
 

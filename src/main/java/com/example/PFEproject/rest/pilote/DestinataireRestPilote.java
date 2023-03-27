@@ -38,4 +38,8 @@ public class DestinataireRestPilote {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/pilote/destinataire/save").toUriString());
         return ResponseEntity.created(uri).body(destinataireService.save(entity));
     }
+    @GetMapping("/findByNomApplication/{nom}")
+    public ResponseEntity<List<DestinataireCommunication>> findByApplicationNomApplication(@PathVariable String nom) {
+        return ResponseEntity.ok().body(destinataireService.findByApplicationNomApplication(nom));
+    }
 }
