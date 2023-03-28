@@ -27,7 +27,7 @@ public class IncidentService {
     public void sendEmailWithDelay(Date date, String to, String subject, String text) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
-        calendar.add(Calendar.MINUTE, -15);
+        calendar.add(Calendar.MINUTE, -30);
         Date delayDate = calendar.getTime();
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
