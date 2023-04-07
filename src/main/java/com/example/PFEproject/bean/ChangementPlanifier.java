@@ -43,4 +43,6 @@ public class ChangementPlanifier {
     private Application application;
     @ManyToOne
     private User createurChangement;
+    @NonNull
+    private Date dateAjout;
 }

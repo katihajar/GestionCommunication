@@ -24,6 +24,11 @@ public class IncidentRestPilote {
     public ResponseEntity<List<Incident>> findByCreateurIncidentUsername(@PathVariable String username) {
         return ResponseEntity.ok().body(incidentService.findByCreateurIncidentUsername(username));
     }
+    @GetMapping("/findAll")
+    public ResponseEntity<List<Incident>> findAll() {
+        System.out.println("hna");
+        return ResponseEntity.ok().body(incidentService.findAll());
+    }
 
     @DeleteMapping("/delete/{id}")
     public int deleteIncidentById(@PathVariable Long id) {

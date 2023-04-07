@@ -24,6 +24,10 @@ public class IncidentService {
     @Autowired
     private JavaMailSender javaMailSender;
 
+    public List<Incident> findAll() {
+        return incidentRepo.findAll();
+    }
+
     public void sendEmailWithDelay(Date date, String to, String subject, String text) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
@@ -78,6 +82,7 @@ public class IncidentService {
             incidentSave.setImpact(incident.getImpact());
             incidentSave.setSolutionContournement(incident.getSolutionContournement());
             incidentSave.setProchaineCommunication(incident.getProchaineCommunication());
+            incidentSave.setDateAjout(incident.getDateAjout());
             Incident incident1 = incidentRepo.save(incidentSave);
             if(incident1.getProchaineCommunication()!=null){
                 String email = incident1.getCreateurIncident().getUsername()+"@cgi.com";

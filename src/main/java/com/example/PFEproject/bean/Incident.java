@@ -43,6 +43,8 @@ public class Incident {
     private String solutionContournement;
     @NonNull
     private Date prochaineCommunication;
+    @NonNull
+    private Date dateAjout;
     @ManyToOne
     private User createurIncident;
     @ManyToOne

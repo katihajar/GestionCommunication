@@ -36,5 +36,6 @@ public class Operation {
     private Application application;
     @ManyToOne
     private User createurOperation;
-
+    @NonNull
+    private Date dateAjout;
 }
