@@ -26,7 +26,6 @@ public class IncidentRestPilote {
     }
     @GetMapping("/findAll")
     public ResponseEntity<List<Incident>> findAll() {
-        System.out.println("hna");
         return ResponseEntity.ok().body(incidentService.findAll());
     }
 

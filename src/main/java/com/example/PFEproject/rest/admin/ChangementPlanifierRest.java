@@ -1,4 +1,4 @@
-package com.example.PFEproject.rest.responsable;
+package com.example.PFEproject.rest.admin;
 
 import com.example.PFEproject.bean.ChangementPlanifier;
 import com.example.PFEproject.service.ChangementPlanifierService;
@@ -16,8 +16,8 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/responsable/changementplanifier")
-public class ChangementPlanifierRestRespo {
+@RequestMapping("/api/admin/changementplanifier")
+public class ChangementPlanifierRest {
     @Autowired
     ChangementPlanifierService changementPlanifierService;
     @GetMapping("/findAll")

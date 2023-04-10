@@ -34,6 +34,9 @@ public class HealthChekPreprodProd {
     @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "healthChekPreprodProd")
     List<HealthChekPreprodProdDetail> healthChekPreprodProdDetailList;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "healthChekPreprodProd")
+    List<StatutApplication> statutApplicationList;
 
     @ManyToOne
     private User createurHealthChekPreprodProd;

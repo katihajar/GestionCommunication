@@ -21,7 +21,8 @@ public class HealthChekPreprodProdService {
     HealthChekPreprodProdDetailService healthChekPreprodProdDetailService;
     @Autowired
     EtatProcessusMetierService etatProcessusMetierService;
-
+    @Autowired
+    StatutApplicationService statutApplicationService;
     public List<HealthChekPreprodProd> findAll() {
         return healthChekPreprodProdRepo.findAll();
     }
@@ -33,8 +34,9 @@ public class HealthChekPreprodProdService {
     public int deleteHealthChekPreprodProdById(Long id) {
         int r1 = etatProcessusMetierService.deleteByHealthChekPreprodProdId(id);
         int r2 = healthChekPreprodProdDetailService.deleteByHealthChekPreprodProdId(id);
+        int r4 =statutApplicationService.deleteByHealthChekPreprodProdId(id);
         int r3 =healthChekPreprodProdRepo.deleteHealthChekPreprodProdById(id);
-        return r1+r2+r3;
+        return r1+r2+r4+r3;
     }
 
     public HealthChekPreprodProd save(HealthChekPreprodProd entity) throws Exception{
@@ -50,6 +52,9 @@ public class HealthChekPreprodProdService {
             }
             if(entity.getEtatProcessusMetierList() !=null){
                 etatProcessusMetierService.saveAllEtatProcessus(health1,entity.getEtatProcessusMetierList());
+            }
+            if(entity.getStatutApplicationList() !=null){
+                statutApplicationService.saveAllStatutApp(health1,entity.getStatutApplicationList());
             }
             return health1;
         }else {

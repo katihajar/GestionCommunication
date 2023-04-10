@@ -1,7 +1,6 @@
-package com.example.PFEproject.rest.responsable;
+package com.example.PFEproject.rest.admin;
 
 import com.example.PFEproject.bean.Incident;
-import com.example.PFEproject.bean.Operation;
 import com.example.PFEproject.service.IncidentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,8 +16,8 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/responsable/incident")
-public class IncidentRestRepo {
+@RequestMapping("/api/admin/incident")
+public class IncidentRest {
     @Autowired
     IncidentService incidentService;
     @GetMapping("/findAll")

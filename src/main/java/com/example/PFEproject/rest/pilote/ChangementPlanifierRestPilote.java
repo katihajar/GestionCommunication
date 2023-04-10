@@ -1,6 +1,7 @@
 package com.example.PFEproject.rest.pilote;
 
 import com.example.PFEproject.bean.ChangementPlanifier;
+import com.example.PFEproject.bean.Operation;
 import com.example.PFEproject.service.ChangementPlanifierService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,5 +36,9 @@ public class ChangementPlanifierRestPilote {
     public ResponseEntity<ChangementPlanifier> save(@RequestBody ChangementPlanifier entity) throws Exception {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/pilote/changementplanifier/savechange").toUriString());
         return ResponseEntity.created(uri).body(changementPlanifierService.save(entity));
+    }
+    @GetMapping("/findAll")
+    public ResponseEntity<List<ChangementPlanifier>> findAll() {
+        return ResponseEntity.ok().body(changementPlanifierService.findAll());
     }
 }

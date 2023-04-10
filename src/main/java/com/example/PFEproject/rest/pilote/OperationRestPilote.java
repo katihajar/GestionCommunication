@@ -1,5 +1,6 @@
 package com.example.PFEproject.rest.pilote;
 
+import com.example.PFEproject.bean.Incident;
 import com.example.PFEproject.bean.Operation;
 import com.example.PFEproject.service.OperationService;
 import lombok.RequiredArgsConstructor;
@@ -33,5 +34,9 @@ public class OperationRestPilote {
     public ResponseEntity<Operation> save(@RequestBody Operation entity) throws Exception {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/pilote/operation/saveoperation").toUriString());
         return ResponseEntity.created(uri).body(operationService.save(entity));
+    }
+    @GetMapping("/findAll")
+    public ResponseEntity<List<Operation>> findAll() {
+        return ResponseEntity.ok().body(operationService.findAll());
     }
 }
