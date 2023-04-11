@@ -6,6 +6,7 @@ import com.example.PFEproject.service.UserService;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -38,13 +39,13 @@ public class UserREST {
     public ResponseEntity<User> SaveUser(@RequestBody UserRole userRole){
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/admin/users/saveUser").toUriString());
         User us = userRole.getUser();
-        us.setPassword(passwordEncoder.encode(us.getPassword()));
-        return ResponseEntity.created(uri).body(userService.saveUser(us,userRole.getIdRole()));
+        String pass =RandomStringUtils.randomAlphanumeric(10);
+        us.setPassword(passwordEncoder.encode(pass));
+        return ResponseEntity.created(uri).body(userService.saveUser(us,userRole.getIdRole(),pass));
     }
     @PutMapping("/UpdateUser")
     public ResponseEntity<User> updateUser(@RequestBody UserRole userRole) throws Exception {
         URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/admin/users/UpdateUser").toUriString());
-        userRole.getUser().setPassword(passwordEncoder.encode(userRole.getUser().getPassword()));
         return ResponseEntity.created(uri).body(userService.updateUser(userRole.getUser(), userRole.getIdRole()));
     }
 

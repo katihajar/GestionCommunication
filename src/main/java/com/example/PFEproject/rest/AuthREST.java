@@ -8,6 +8,7 @@ import com.example.PFEproject.jwt.JwtHelper;
 import com.example.PFEproject.repo.RefreshTokenRepository;
 import com.example.PFEproject.repo.UserRepository;
 import com.example.PFEproject.service.UserService;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +16,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -37,7 +39,8 @@ public class AuthREST {
     JwtHelper jwtHelper;
     @Autowired
     UserService userService;
-
+    @Autowired
+    PasswordEncoder passwordEncoder;
     @PostMapping("/login")
     @Transactional
     public ResponseEntity<?> login( @RequestBody LoginDTO dto) {
@@ -52,16 +55,6 @@ public class AuthREST {
         return ResponseEntity.ok(new TokenDTO(user1, accessToken, refreshTokenString));
     }
 
-//    @PostMapping("/logout")
-//    public ResponseEntity<?> logout(@RequestBody TokenDTO dto,HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
-//        String refreshTokenString = dto.getRefreshToken();
-//        if (refreshTokenString != null && jwtHelper.validateRefreshToken(refreshTokenString) && refreshTokenRepository.existsById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString))) {
-//            refreshTokenRepository.deleteById(jwtHelper.getTokenIdFromRefreshToken(refreshTokenString));
-//            return ResponseEntity.ok().build();
-//        }
-//
-//        throw new BadCredentialsException("Invalid or missing refresh token");
-//    }
     @PostMapping("/logoutAll")
     public ResponseEntity<?> logoutAll() {
             // valid and exists in db
@@ -101,4 +94,24 @@ public class AuthREST {
 
         throw new BadCredentialsException("invalid token");
     }
+    @PutMapping("resetpass")
+    public ResponseEntity<User> changePassword(@RequestBody Userpass user) throws Exception {
+        User usr = userService.findUserById(user.id);
+        if(usr!=null){
+            if(passwordEncoder.matches(user.pass,usr.getPassword())){
+                usr.setPassword(passwordEncoder.encode(user.newpass));
+                return ResponseEntity.ok().body(userService.changePassword(usr));
+            }else {
+                throw new Exception();
+            }
+        }else {
+            throw new Exception();
+        }
+    }
+}
+@Data
+class  Userpass{
+    String newpass;
+    String pass;
+    Long id;
 }

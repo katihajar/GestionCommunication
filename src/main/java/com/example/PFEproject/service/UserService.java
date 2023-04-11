@@ -7,6 +7,8 @@ import com.example.PFEproject.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -27,7 +29,8 @@ public class UserService implements UserDetailsService {
     UserRepository userRepository;
     @Autowired
     RoleRepo roleRepo;
-
+    @Autowired
+    private JavaMailSender javaMailSender;
 
     public User findUserByUsername(String username) {
         return userRepository.findUserByUsername(username);
@@ -60,12 +63,14 @@ public class UserService implements UserDetailsService {
         userRepository.saveAll(userss);
         return userss;
     }
-    public User saveUser(User user, Long id){
+
+    public User saveUser(User user, Long id,String pass){
         User usr = findUserByUsername(user.getUsername());
         if (usr == null) {
             Set<Role> authorities = new HashSet<>();
             roleRepo.findById(id).ifPresent(authorities::add);
             user.setRoles(authorities);
+            prepareMessage(user,pass);
             return userRepository.save(user);
         }else {
             return usr;
@@ -104,7 +109,21 @@ public class UserService implements UserDetailsService {
             return userRepository.save(usr);
         }
     }
+    public void prepareMessage(User user,String pass) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("Gestion-Communication@outlook.fr");
+        String to = user.getUsername()+"@cgi.com";
+        message.setTo(to);
+        message.setSubject("Création de compte : Gestion de Communication");
+        message.setText("Votre compte a été créé, vous trouverez ci-joint le mot de passe et login :\n" +
+                "login : " + user.getUsername() + "\n" +
+                "password : " + pass);
+        javaMailSender.send(message);
+    }
+    public User changePassword(User us) {
 
+            return userRepository.save(us);
+    }
     public List<User> findAll() {
         return userRepository.findAll();
     }
