@@ -17,13 +17,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 
 @RestController
@@ -55,17 +52,12 @@ public class AuthREST {
         return ResponseEntity.ok(new TokenDTO(user1, accessToken, refreshTokenString));
     }
 
-    @PostMapping("/logoutAll")
-    public ResponseEntity<?> logoutAll() {
-            // valid and exists in db
-            refreshTokenRepository.deleteAll();
-            return ResponseEntity.ok().build();
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletRequest request) {
+        SecurityContextHolder.clearContext();
+        return ResponseEntity.ok("Logged out successfully");
     }
 
-    @GetMapping("/logout-success")
-    public void sucess(){
-        System.out.println("success");
-    }
     @PostMapping("access-token")
     public ResponseEntity<?> accessToken(@RequestBody TokenDTO dto) {
         String refreshTokenString = dto.getRefreshToken();

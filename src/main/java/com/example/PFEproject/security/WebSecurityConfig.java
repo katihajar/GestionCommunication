@@ -61,12 +61,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .anyRequest().authenticated()
                 .and().httpBasic();
         http.addFilterBefore(accessTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-        http.logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/api/auth/logout-success") // add this line to specify the logout success URL
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
-                .permitAll()
-                .and()
-                .csrf().disable();   }
+    }
 }
