@@ -103,10 +103,7 @@ class UserRESTTest {
         response.andExpect(MockMvcResultMatchers.jsonPath("$.username", CoreMatchers.is(user.getUsername())));
         response.andExpect(MockMvcResultMatchers.jsonPath("$.id", CoreMatchers.is(user.getId().intValue())));
     }
-    @AfterEach
-    public void Logout(){
-          authREST.logoutAll();
-    }
+
 }
 
 @Data
