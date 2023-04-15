@@ -52,6 +52,7 @@ public class ChangementPlanifierService {
             chg.setDateDebut(entity.getDateDebut());
             chg.setDetail(entity.getDetail());
             chg.setDateAjout(entity.getDateAjout());
+            chg.setType(entity.getType());
             ChangementPlanifier chg1 = changementPlanifierRepo.save(chg);
             if(entity.getContenuChangementList() !=null){
                 contenuChangementService.saveAllContent(chg1,entity.getContenuChangementList());

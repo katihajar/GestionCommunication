@@ -83,6 +83,7 @@ public class IncidentService {
             incidentSave.setSolutionContournement(incident.getSolutionContournement());
             incidentSave.setProchaineCommunication(incident.getProchaineCommunication());
             incidentSave.setDateAjout(incident.getDateAjout());
+            incidentSave.setType(incident.getType());
             Incident incident1 = incidentRepo.save(incidentSave);
             if(incident1.getProchaineCommunication()!=null){
                 String email = incident1.getCreateurIncident().getUsername()+"@cgi.com";

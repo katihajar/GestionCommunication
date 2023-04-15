@@ -36,6 +36,8 @@ public class ChangementPlanifier {
     private String impactMetier;
     private Date dateDebut;
     private Date dateFin;
+    @Size(min = 0, max = 1000)
+    private String type;
     @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "changementPlanifier")
     private List<ContenuChangement> contenuChangementList;

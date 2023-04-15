@@ -41,6 +41,8 @@ public class Incident {
     private String causePrincipale;
     @Size( max = 1000)
     private String solutionContournement;
+    @Size(min = 0, max = 1000)
+    private String type;
     @NonNull
     private Date prochaineCommunication;
     @NonNull
