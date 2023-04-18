@@ -1,6 +1,7 @@
 package com.example.PFEproject.service;
 
 import com.example.PFEproject.bean.HealthChekPreprodProd;
+import com.example.PFEproject.dto.HealthChekPreprodProdDTO;
 import com.example.PFEproject.repo.HealthChekPreprodProdRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Transactional
@@ -25,6 +30,16 @@ public class HealthChekPreprodProdService {
     StatutApplicationService statutApplicationService;
     public List<HealthChekPreprodProd> findAll() {
         return healthChekPreprodProdRepo.findAll();
+    }
+
+
+    public List<HealthChekPreprodProdDTO> getLast10Added() {
+        LocalDate currentDate = LocalDate.now();
+        Date date = Date.from(currentDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+        List<HealthChekPreprodProd> healthChekPreprodProdList = healthChekPreprodProdRepo.findFirst10ByDateAjoutBeforeOrderByDateAjoutDesc(date);
+        return healthChekPreprodProdList.stream()
+                .map(h -> new HealthChekPreprodProdDTO(h.getId(), h.getTitre(), h.getDateAjout(), h.getType(), h.getEtatProcessusMetierList()))
+                .collect(Collectors.toList());
     }
 
     public List<HealthChekPreprodProd> findByCreateurHealthChekPreprodProdId(Long id) {

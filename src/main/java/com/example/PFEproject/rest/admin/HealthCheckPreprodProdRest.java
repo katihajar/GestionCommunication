@@ -1,7 +1,6 @@
-package com.example.PFEproject.rest.responsable;
+package com.example.PFEproject.rest.admin;
 
 import com.example.PFEproject.bean.HealthChekPreprodProd;
-import com.example.PFEproject.dto.HealthChekPreprodProdDTO;
 import com.example.PFEproject.service.HealthChekPreprodProdService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,16 +15,12 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/responsable/healthcheck")
-public class HealthCheckPreprodProdRestRespo {
+@RequestMapping("/api/admin/healthcheck")
+public class HealthCheckPreprodProdRest {
     @Autowired
     HealthChekPreprodProdService healthChekPreprodProdService;
     @GetMapping("/findAll")
     public ResponseEntity<List<HealthChekPreprodProd>> findAll() {
         return ResponseEntity.ok().body(healthChekPreprodProdService.findAll());
-    }
-    @GetMapping("/last10")
-    public ResponseEntity<List<HealthChekPreprodProdDTO>> getLast10Added() {
-        return ResponseEntity.ok().body(healthChekPreprodProdService.getLast10Added());
     }
 }
