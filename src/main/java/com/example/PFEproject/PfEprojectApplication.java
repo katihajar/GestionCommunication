@@ -22,10 +22,6 @@ public class PfEprojectApplication {
 			roleService.saveRole(new Role(null, "ROLE_PILOTE"));
 			roleService.saveRole(new Role(null, "ROLE_ADMIN"));
 			roleService.saveRole(new Role(null, "ROLE_RESPONSABLE"));
-//			userREST.SaveUser(new User(null,"john","john","john@cgi.com","john", null));
-//			userREST.SaveUser(new User(null,"jj","jj","hajar.kati","hajar", null));
-//			userService.addRoleToUser("hajar.kati","ROLE_ADMIN");
-//			userService.addRoleToUser("john@cgi.com","ROLE_PILOTE");
 		};
 	}
 }

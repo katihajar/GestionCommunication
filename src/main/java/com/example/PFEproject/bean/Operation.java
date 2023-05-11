@@ -38,4 +38,7 @@ public class Operation {
     private User createurOperation;
     @NonNull
     private Date dateAjout;
+    @NonNull
+    @Size(min = 3, max = 1000)
+    private String impactMetier;
 }
