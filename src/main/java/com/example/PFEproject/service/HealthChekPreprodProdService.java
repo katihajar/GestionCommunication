@@ -1,5 +1,6 @@
 package com.example.PFEproject.service;
 
+import com.example.PFEproject.bean.HealthCheckBwPerimetre;
 import com.example.PFEproject.bean.HealthChekPreprodProd;
 import com.example.PFEproject.dto.HealthChekPreprodProdDTO;
 import com.example.PFEproject.repo.HealthChekPreprodProdRepo;
@@ -33,10 +34,10 @@ public class HealthChekPreprodProdService {
     }
 
 
-    public List<HealthChekPreprodProdDTO> getLast10Added() {
+    public List<HealthChekPreprodProdDTO> getLast10Added(String lot) {
         LocalDate currentDate = LocalDate.now();
         Date date = Date.from(currentDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-        List<HealthChekPreprodProd> healthChekPreprodProdList = healthChekPreprodProdRepo.findFirst10ByDateAjoutBeforeOrderByDateAjoutDesc(date);
+        List<HealthChekPreprodProd> healthChekPreprodProdList = healthChekPreprodProdRepo.findFirst10ByCreateurHealthChekPreprodProdLotsAndDateAjoutBeforeOrderByDateAjoutDesc(lot,date);
         return healthChekPreprodProdList.stream()
                 .map(h -> new HealthChekPreprodProdDTO(h.getId(), h.getTitre(), h.getDateAjout(), h.getType(), h.getEtatProcessusMetierList()))
                 .collect(Collectors.toList());
@@ -44,6 +45,11 @@ public class HealthChekPreprodProdService {
 
     public List<HealthChekPreprodProd> findByCreateurHealthChekPreprodProdId(Long id) {
         return healthChekPreprodProdRepo.findByCreateurHealthChekPreprodProdId(id);
+    }
+
+
+    public List<HealthChekPreprodProd> findByCreateurHealthChekPreprodProdLot(String lot) {
+        return healthChekPreprodProdRepo.findByCreateurHealthChekPreprodProdLots(lot);
     }
 
     public int deleteHealthChekPreprodProdById(Long id) {

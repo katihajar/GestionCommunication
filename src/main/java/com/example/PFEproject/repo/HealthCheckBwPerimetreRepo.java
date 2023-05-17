@@ -8,5 +8,7 @@ import java.util.List;
 @Repository
 public interface HealthCheckBwPerimetreRepo  extends JpaRepository<HealthCheckBwPerimetre,Long> {
     List<HealthCheckBwPerimetre> findByCreateurHealthCheckBwPerimetreId(Long id);
+    List<HealthCheckBwPerimetre> findByCreateurHealthCheckBwPerimetreLots(String lot);
+
     int deleteHealthCheckBwPerimetreById(Long id);
 }

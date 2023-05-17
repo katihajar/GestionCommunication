@@ -1,5 +1,6 @@
 package com.example.PFEproject.rest.pilote;
 
+import com.example.PFEproject.bean.ChangementPlanifier;
 import com.example.PFEproject.bean.HealthCheckBwPerimetre;
 import com.example.PFEproject.service.HealthCheckBwPerimetreService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,10 @@ public class HealthCheckBwPerimetreRestPilote {
     @Autowired
     HealthCheckBwPerimetreService healthCheckBwPerimetreService;
 
+    @GetMapping("/lot/{lots}")
+    public ResponseEntity<List<HealthCheckBwPerimetre>> findByCreateurHealthCheckBwPerimetreLot(@PathVariable String lots) {
+        return ResponseEntity.ok().body(healthCheckBwPerimetreService.findByCreateurHealthCheckBwPerimetreLot(lots));
+    }
     @GetMapping("/user/{id}")
     public ResponseEntity<List<HealthCheckBwPerimetre>> findByCreateurHealthCheckBwPerimetreId(@PathVariable Long id) {
         return ResponseEntity.ok().body(healthCheckBwPerimetreService.findByCreateurHealthCheckBwPerimetreId(id));

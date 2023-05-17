@@ -20,6 +20,10 @@ public class ApplicationService {
     @Autowired
     PiloteApplicationService piloteApplicationService;
 
+    public List<Application> findApplicationByLots(String lots) {
+        return applicationRepo.findApplicationByLot(lots);
+    }
+
     public List<Application> findByResponsableId(Long id) {
         return applicationRepo.findByResponsableId(id);
     }

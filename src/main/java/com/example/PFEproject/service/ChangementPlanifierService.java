@@ -25,6 +25,10 @@ public class ChangementPlanifierService {
         return changementPlanifierRepo.findByCreateurChangementId(id);
     }
 
+    public List<ChangementPlanifier> findByApplicationLot(String lots) {
+        return changementPlanifierRepo.findByApplicationLot(lots);
+    }
+
     public List<ChangementPlanifier> findByApplicationResponsableId(Long id) {
         return changementPlanifierRepo.findByApplicationResponsableId(id);
     }

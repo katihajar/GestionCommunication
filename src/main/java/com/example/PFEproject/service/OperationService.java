@@ -22,6 +22,10 @@ public class OperationService {
         return operationRepo.deleteOperationById(id);
     }
 
+    public List<Operation> findByApplicationLot(String lots) {
+        return operationRepo.findByApplicationLot(lots);
+    }
+
     public List<Operation> findAll() {
         return operationRepo.findAll();
     }

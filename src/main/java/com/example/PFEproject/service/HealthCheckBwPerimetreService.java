@@ -29,10 +29,16 @@ public class HealthCheckBwPerimetreService {
         return healthCheckBwPerimetreRepo.findByCreateurHealthCheckBwPerimetreId(id);
     }
 
+
+
     public int deleteHealthCheckBwPerimetreById(Long id) {
         int r1= healthCheckBwPerimetreDetailService.deleteByHealthCheckBwPerimetreId(id);
         int r2 =healthCheckBwPerimetreRepo.deleteHealthCheckBwPerimetreById(id);
         return r1+r2;
+    }
+
+    public List<HealthCheckBwPerimetre> findByCreateurHealthCheckBwPerimetreLot(String lot) {
+        return healthCheckBwPerimetreRepo.findByCreateurHealthCheckBwPerimetreLots(lot);
     }
 
     public HealthCheckBwPerimetre save(HealthCheckBwPerimetre entity) throws Exception{

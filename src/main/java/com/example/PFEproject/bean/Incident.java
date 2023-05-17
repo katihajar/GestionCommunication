@@ -43,6 +43,10 @@ public class Incident {
     private String solutionContournement;
     @Size(min = 0, max = 1000)
     private String type;
+    @Size(min = 0, max = 1000)
+    private String detailResolution;
+    @Size(min = 0, max = 1000)
+    private String actionPrise;
     @NonNull
     private Date prochaineCommunication;
     @NonNull

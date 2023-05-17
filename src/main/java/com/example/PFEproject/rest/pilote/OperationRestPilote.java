@@ -25,7 +25,10 @@ public class OperationRestPilote {
         return operationService.deleteOperationById(id);
     }
 
-
+    @GetMapping("/lot/{lots}")
+    public ResponseEntity<List<Operation>> findByApplicationLot(@PathVariable String lots) {
+        return ResponseEntity.ok().body(operationService.findByApplicationLot(lots));
+    }
     @GetMapping("/user/{id}")
     public ResponseEntity<List<Operation>> findByCreateurOperationId(@PathVariable Long id) {
         return ResponseEntity.ok().body(operationService.findByCreateurOperationId(id));

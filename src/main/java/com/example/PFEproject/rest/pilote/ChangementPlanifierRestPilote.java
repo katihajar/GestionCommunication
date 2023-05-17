@@ -21,6 +21,10 @@ public class ChangementPlanifierRestPilote {
 
     @Autowired
     ChangementPlanifierService changementPlanifierService;
+    @GetMapping("/lot/{lots}")
+    public ResponseEntity<List<ChangementPlanifier>> findByApplicationLot(@PathVariable String lots) {
+        return ResponseEntity.ok().body(changementPlanifierService.findByApplicationLot(lots));
+    }
 
     @GetMapping("/user/{id}")
     public ResponseEntity<List<ChangementPlanifier>> findByCreateurChangementId(@PathVariable Long id) {

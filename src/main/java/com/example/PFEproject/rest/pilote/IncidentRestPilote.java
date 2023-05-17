@@ -1,5 +1,6 @@
 package com.example.PFEproject.rest.pilote;
 
+import com.example.PFEproject.bean.HealthChekPreprodProd;
 import com.example.PFEproject.bean.Incident;
 import com.example.PFEproject.service.IncidentService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,10 @@ public class IncidentRestPilote {
     @GetMapping("/user/{username}")
     public ResponseEntity<List<Incident>> findByCreateurIncidentUsername(@PathVariable String username) {
         return ResponseEntity.ok().body(incidentService.findByCreateurIncidentUsername(username));
+    }
+    @GetMapping("/lot/{lots}")
+    public ResponseEntity<List<Incident>> findByApplicationLot(@PathVariable String lots) {
+        return ResponseEntity.ok().body(incidentService.findByApplicationLot(lots));
     }
     @GetMapping("/findAll")
     public ResponseEntity<List<Incident>> findAll() {

@@ -21,6 +21,10 @@ import java.util.List;
 public class IncidentRestRepo {
     @Autowired
     IncidentService incidentService;
+    @GetMapping("/lot/{lots}")
+    public ResponseEntity<List<Incident>> findByApplicationLot(@PathVariable String lots) {
+        return ResponseEntity.ok().body(incidentService.findByApplicationLot(lots));
+    }
     @GetMapping("/findAll")
     public ResponseEntity<List<Incident>> findAll() {
         return ResponseEntity.ok().body(incidentService.findAll());

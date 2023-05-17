@@ -20,7 +20,10 @@ import java.util.List;
 public class ApplicationRestRepo {
     @Autowired
     ApplicationService applicationService;
-
+    @GetMapping("/lot/{lots}")
+    public ResponseEntity<List<Application>> findApplicationByLots(@PathVariable String lots) {
+        return ResponseEntity.ok().body(applicationService.findApplicationByLots(lots));
+    }
     @GetMapping("/user/{id}")
     public ResponseEntity<List<Application>> findByResponsableId(@PathVariable Long id) {
         return ResponseEntity.ok().body(applicationService.findByResponsableId(id));

@@ -22,6 +22,10 @@ public class HealthCheckPreprodProdRestPilote {
     @Autowired
     HealthChekPreprodProdService healthChekPreprodProdService;
 
+    @GetMapping("/lot/{lots}")
+    public ResponseEntity<List<HealthChekPreprodProd>> findByCreateurHealthChekPreprodProdLot(@PathVariable String lots) {
+        return ResponseEntity.ok().body(healthChekPreprodProdService.findByCreateurHealthChekPreprodProdLot(lots));
+    }
     @GetMapping("/user/{id}")
     public ResponseEntity<List<HealthChekPreprodProd>> findByCreateurHealthChekPreprodProdId(@PathVariable Long id) {
         return ResponseEntity.ok().body(healthChekPreprodProdService.findByCreateurHealthChekPreprodProdId(id));
@@ -30,9 +34,9 @@ public class HealthCheckPreprodProdRestPilote {
     public ResponseEntity<List<HealthChekPreprodProd>> findAll() {
         return ResponseEntity.ok().body(healthChekPreprodProdService.findAll());
     }
-    @GetMapping("/last10")
-    public ResponseEntity<List<HealthChekPreprodProdDTO>> getLast10Added() {
-        return ResponseEntity.ok().body(healthChekPreprodProdService.getLast10Added());
+    @GetMapping("/last10/{lot}")
+    public ResponseEntity<List<HealthChekPreprodProdDTO>> getLast10Added(@PathVariable String lot) {
+        return ResponseEntity.ok().body(healthChekPreprodProdService.getLast10Added(lot));
     }
 
     @DeleteMapping("/delete/{id}")

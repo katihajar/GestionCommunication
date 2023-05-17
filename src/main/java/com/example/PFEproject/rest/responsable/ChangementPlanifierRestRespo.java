@@ -24,6 +24,10 @@ public class ChangementPlanifierRestRespo {
     public ResponseEntity<List<ChangementPlanifier>> findAll() {
         return ResponseEntity.ok().body(changementPlanifierService.findAll());
     }
+    @GetMapping("/lot/{lots}")
+    public ResponseEntity<List<ChangementPlanifier>> findByApplicationLot(@PathVariable String lots) {
+        return ResponseEntity.ok().body(changementPlanifierService.findByApplicationLot(lots));
+    }
     @GetMapping("/user/{id}")
     public ResponseEntity<List<ChangementPlanifier>> findByApplicationResponsableId(@PathVariable Long id) {
         return ResponseEntity.ok().body(changementPlanifierService.findByApplicationResponsableId(id));

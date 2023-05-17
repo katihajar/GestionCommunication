@@ -1,5 +1,6 @@
 package com.example.PFEproject.rest.responsable;
 
+import com.example.PFEproject.bean.HealthCheckBwPerimetre;
 import com.example.PFEproject.bean.HealthChekPreprodProd;
 import com.example.PFEproject.dto.HealthChekPreprodProdDTO;
 import com.example.PFEproject.service.HealthChekPreprodProdService;
@@ -8,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,8 +26,13 @@ public class HealthCheckPreprodProdRestRespo {
     public ResponseEntity<List<HealthChekPreprodProd>> findAll() {
         return ResponseEntity.ok().body(healthChekPreprodProdService.findAll());
     }
-    @GetMapping("/last10")
-    public ResponseEntity<List<HealthChekPreprodProdDTO>> getLast10Added() {
-        return ResponseEntity.ok().body(healthChekPreprodProdService.getLast10Added());
+
+    @GetMapping("/lot/{lots}")
+    public ResponseEntity<List<HealthChekPreprodProd>> findByCreateurHealthChekPreprodProdLot(@PathVariable String lots) {
+        return ResponseEntity.ok().body(healthChekPreprodProdService.findByCreateurHealthChekPreprodProdLot(lots));
+    }
+    @GetMapping("/last10/{lot}")
+    public ResponseEntity<List<HealthChekPreprodProdDTO>> getLast10Added(@PathVariable String lot) {
+        return ResponseEntity.ok().body(healthChekPreprodProdService.getLast10Added(lot));
     }
 }

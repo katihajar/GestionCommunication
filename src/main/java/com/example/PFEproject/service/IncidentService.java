@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
+
 @RequiredArgsConstructor
 @Transactional
 @Slf4j
@@ -51,6 +52,10 @@ public class IncidentService {
         }, delayDate);
     }
 
+    public List<Incident> findByApplicationLot(String lots) {
+        return incidentRepo.findByApplicationLot(lots);
+    }
+
     public List<Incident> findByCreateurIncidentUsername(String username) {
         return incidentRepo.findByCreateurIncidentUsername(username);
     }
@@ -84,6 +89,8 @@ public class IncidentService {
             incidentSave.setProchaineCommunication(incident.getProchaineCommunication());
             incidentSave.setDateAjout(incident.getDateAjout());
             incidentSave.setType(incident.getType());
+            incidentSave.setActionPrise(incident.getActionPrise());
+            incidentSave.setDetailResolution(incident.getDetailResolution());
             Incident incident1 = incidentRepo.save(incidentSave);
             if(incident1.getProchaineCommunication()!=null){
                 String email = incident1.getCreateurIncident().getUsername()+"@cgi.com";

@@ -1,6 +1,7 @@
 package com.example.PFEproject.rest.responsable;
 
 import com.example.PFEproject.bean.ChangementPlanifier;
+import com.example.PFEproject.bean.Incident;
 import com.example.PFEproject.bean.Operation;
 import com.example.PFEproject.service.OperationService;
 import lombok.RequiredArgsConstructor;
@@ -25,5 +26,9 @@ public class OperationRestRepo {
     @GetMapping("/user/{id}")
     public ResponseEntity<List<Operation>> findByApplicationResponsableId(@PathVariable Long id) {
         return ResponseEntity.ok().body(operationService.findByApplicationResponsableId(id));
+    }
+    @GetMapping("/lot/{lots}")
+    public ResponseEntity<List<Operation>> findByApplicationLot(@PathVariable String lots) {
+        return ResponseEntity.ok().body(operationService.findByApplicationLot(lots));
     }
 }
