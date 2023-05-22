@@ -42,4 +42,15 @@ public class DestinataireRestPilote {
     public ResponseEntity<List<DestinataireCommunication>> findByApplicationNomApplication(@PathVariable String nom) {
         return ResponseEntity.ok().body(destinataireService.findByApplicationNomApplication(nom));
     }
+
+    @PutMapping("/validate")
+    public ResponseEntity<DestinataireCommunication> validationResponsable(@RequestBody DestinataireCommunication entity) throws Exception {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/responsable/destinataire/validate").toUriString());
+        return ResponseEntity.created(uri).body(destinataireService.validationResponsable(entity));
+    }
+    @PutMapping("/retirer")
+    public ResponseEntity<DestinataireCommunication> RetirerDest(@RequestBody DestinataireCommunication entity) throws Exception {
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentContextPath().path("/api/responsable/destinataire/retirer").toUriString());
+        return ResponseEntity.created(uri).body(destinataireService.RetirerDest(entity));
+    }
 }

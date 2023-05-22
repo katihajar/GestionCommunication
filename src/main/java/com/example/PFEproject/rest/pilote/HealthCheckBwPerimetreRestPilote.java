@@ -20,6 +20,10 @@ import java.util.List;
 public class HealthCheckBwPerimetreRestPilote {
     @Autowired
     HealthCheckBwPerimetreService healthCheckBwPerimetreService;
+    @GetMapping("/findAll")
+    public ResponseEntity<List<HealthCheckBwPerimetre>> findAll() {
+        return ResponseEntity.ok().body(healthCheckBwPerimetreService.findAll());
+    }
 
     @GetMapping("/lot/{lots}")
     public ResponseEntity<List<HealthCheckBwPerimetre>> findByCreateurHealthCheckBwPerimetreLot(@PathVariable String lots) {

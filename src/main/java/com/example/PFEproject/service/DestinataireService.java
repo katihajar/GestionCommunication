@@ -35,7 +35,7 @@ public class DestinataireService {
     public DestinataireCommunication save(DestinataireCommunication entity) throws Exception{
         DestinataireCommunication des = findByEmailAndApplicationNomApplication(entity.getEmail(),entity.getApplication().getNomApplication());
         if(des == null){
-               entity.setStatutRespo("En Attente");
+               entity.setStatutRespo("Valider");
         return destinataireRepo.save(entity);
         }else {
             throw new Exception();
