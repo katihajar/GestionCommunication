@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Data
 @Entity
@@ -28,7 +28,6 @@ public class ChangementPlanifier {
     @NonNull
     @Size(min = 3, max = 100)
     private String statut;
-    @NonNull
     @Size(min = 0, max = 100)
     private String version;
     @NonNull

@@ -19,9 +19,10 @@ public class PfEprojectApplication {
 	@Bean
 	CommandLineRunner run(UserREST userREST, UserService userService, RoleService roleService){
 		return args -> {
-			roleService.saveRole(new Role(null, "ROLE_PILOTE"));
-			roleService.saveRole(new Role(null, "ROLE_ADMIN"));
-			roleService.saveRole(new Role(null, "ROLE_RESPONSABLE"));
+			roleService.saveRole(new Role(1L, "ROLE_PILOTE"));
+			roleService.saveRole(new Role(2L, "ROLE_ADMIN"));
+			roleService.saveRole(new Role(3L, "ROLE_RESPONSABLE"));
+			roleService.saveRole(new Role(4L, "ROLE_SUPERADMIN"));
 		};
 	}
 }

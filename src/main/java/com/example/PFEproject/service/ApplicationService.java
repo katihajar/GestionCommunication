@@ -53,6 +53,7 @@ public class ApplicationService {
                 appli.setLot(application.getLot());
                 appli.setDisponibilite(application.getDisponibilite());
                 appli.setResponsable(application.getResponsable());
+                appli.setCharteChangement(application.getCharteChangement());
                 applicationRepo.save(appli);
                 Application appliSave = findByNomApplication(application.getNomApplication());
                 if (application.getPiloteApplicationList() != null) {
@@ -72,6 +73,7 @@ public class ApplicationService {
         Application app = findApplicationById(application.getId());
         app.setNomApplication(application.getNomApplication());
         app.setCharteIncident(application.getCharteIncident());
+        app.setCharteChangement(application.getCharteChangement());
         app.setDisponibilite(application.getDisponibilite());
         return applicationRepo.save(app);
     }

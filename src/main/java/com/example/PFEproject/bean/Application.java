@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @Data
 @Entity
 public class Application {
@@ -26,6 +26,8 @@ public class Application {
     private String lot;
     @NonNull
     private String charteIncident;
+    @NonNull
+    private String charteChangement;
     @NonNull
     private String disponibilite;
     @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)

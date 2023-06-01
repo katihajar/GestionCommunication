@@ -91,7 +91,6 @@ public class UserService implements UserDetailsService {
                 usr.setLots(user.getLots());
                 usr.setPrenom(user.getPrenom());
                 usr.setUsername(user.getUsername());
-                usr.setPassword(user.getPassword());
                 return userRepository.save(usr);
             }else {
                 throw new Exception();
@@ -126,6 +125,14 @@ public class UserService implements UserDetailsService {
     }
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    public List<User> findByRolesName() {
+        return userRepository.findByRolesName("ROLE_ADMIN");
+    }
+
+    public List<User> findByLots(String lot) {
+        return userRepository.findByLots(lot);
     }
 }
 

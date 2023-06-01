@@ -34,6 +34,12 @@ public class UserREST {
     public ResponseEntity<List<User>> FindAllUsers(){
         return ResponseEntity.ok().body(userService.findAll());
     }
+    @GetMapping("/lot/{lot}")
+    public ResponseEntity<List<User>> findByLots(@PathVariable String lot) {
+        return ResponseEntity.ok().body(userService.findByLots(lot));
+    }
+
+
 
     @PostMapping("/saveUser")
     public ResponseEntity<User> SaveUser(@RequestBody UserRole userRole){

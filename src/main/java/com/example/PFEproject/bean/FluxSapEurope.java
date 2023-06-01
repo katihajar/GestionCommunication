@@ -6,23 +6,21 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 
 @AllArgsConstructor
 @NoArgsConstructor(force = true)
 @Data
 @Entity
-public class PlanAction {
+public class FluxSapEurope {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     @NonNull
-    private double numero;
+    private String systeme;
     @NonNull
-    private String statut;
+    private String etat;
     @NonNull
-    @Size(min = 3, max = 1000)
-    private String description;
+    private String commentaire;
     @ManyToOne
-    private Incident incident;
+    private HealthCheckFlamingo healthCheckFlamingo;
 }

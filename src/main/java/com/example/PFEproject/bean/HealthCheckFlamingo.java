@@ -7,39 +7,36 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import javax.persistence.*;
-import javax.validation.constraints.Size;
 import java.util.Date;
 import java.util.List;
 
-@NoArgsConstructor(force = true)
 @AllArgsConstructor
+@NoArgsConstructor(force = true)
 @Data
 @Entity
-public class HealthChekPreprodProd {
+public class HealthCheckFlamingo {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    private String remarque;
     @NonNull
-    @Size(min = 3, max = 200)
     private String titre;
     @NonNull
     private Date dateAjout;
     @NonNull
-    private String type;
-
-
-    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "healthChekPreprodProd")
-    private List<EtatProcessusMetier> etatProcessusMetierList;
-    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "healthChekPreprodProd")
-    List<HealthChekPreprodProdDetail> healthChekPreprodProdDetailList;
-    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
-    @OneToMany(mappedBy = "healthChekPreprodProd")
-    List<StatutApplication> statutApplicationList;
-
+    private Date dateFlux;
     @ManyToOne
-    private User createurHealthChekPreprodProd;
-
-
+    private User createurHealthCheckFlamingo;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "healthCheckFlamingo")
+    private List<FluxEAI> fluxEAIList;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "healthCheckFlamingo")
+    private List<FluxSalesOrder> fluxSalesOrderList;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "healthCheckFlamingo")
+    private List<FluxSapEurope> fluxSapEuropeList;
+    @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "healthCheckFlamingo")
+    private List<FluxSapHarmonie> fluxSapHarmonies;
 }

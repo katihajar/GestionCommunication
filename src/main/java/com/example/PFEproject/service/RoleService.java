@@ -25,7 +25,9 @@ public class RoleService {
     public Role findByName(String name) {
         return roleRepo.findByName(name);
     }
-
+    public Role findAdmin() {
+        return roleRepo.findByName("ROLE_ADMIN");
+    }
     public Role saveRole(Role role){
         Role r = findByName(role.getName());
         if(r == null) {

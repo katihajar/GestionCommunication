@@ -10,7 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Data
 @Entity

@@ -14,7 +14,7 @@ import javax.persistence.Id;
 
 
 @Data
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Entity
 public class Role implements GrantedAuthority {

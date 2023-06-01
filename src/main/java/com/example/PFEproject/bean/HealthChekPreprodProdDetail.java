@@ -9,8 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.Date;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor(force = true)
 @Data
 @Entity
 public class HealthChekPreprodProdDetail {

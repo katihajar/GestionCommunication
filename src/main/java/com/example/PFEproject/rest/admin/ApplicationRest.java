@@ -19,6 +19,10 @@ import java.util.List;
 public class ApplicationRest {
     @Autowired
     ApplicationService applicationService;
+    @GetMapping("/lot/{lots}")
+    public ResponseEntity<List<Application>> findApplicationByLots(@PathVariable String lots) {
+        return ResponseEntity.ok().body(applicationService.findApplicationByLots(lots));
+    }
 
     @DeleteMapping("/id/{id}")
     public int deleteApplicationById(@PathVariable Long id) {

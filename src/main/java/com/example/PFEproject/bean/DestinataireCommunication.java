@@ -8,7 +8,7 @@ import lombok.NonNull;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @Data
 @Entity
 public class DestinataireCommunication {

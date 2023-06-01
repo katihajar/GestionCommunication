@@ -56,6 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/auth/refresh-token").hasAnyAuthority()
                 .antMatchers("/api/auth/resetpass").hasAnyAuthority()
                 .antMatchers("/api/admin/**").hasAnyAuthority("ROLE_ADMIN")
+                .antMatchers("/api/superadmin/**").hasAnyAuthority("ROLE_SUPERADMIN")
                 .antMatchers("/api/pilote/**").hasAnyAuthority("ROLE_PILOTE")
                 .antMatchers("/api/responsable/**").hasAnyAuthority("ROLE_RESPONSABLE")
                 .anyRequest().authenticated()

@@ -9,7 +9,7 @@ import lombok.NonNull;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Data
 @Entity
