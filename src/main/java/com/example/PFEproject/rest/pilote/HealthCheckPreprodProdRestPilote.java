@@ -38,6 +38,10 @@ public class HealthCheckPreprodProdRestPilote {
     public ResponseEntity<List<HealthChekPreprodProdDTO>> getLast10Added(@PathVariable String lot) {
         return ResponseEntity.ok().body(healthChekPreprodProdService.getLast10Added(lot));
     }
+    @GetMapping("/historique/{lot}")
+    public ResponseEntity<List<HealthChekPreprodProdDTO>> getHistorique(@PathVariable String lot) {
+        return ResponseEntity.ok().body(healthChekPreprodProdService.getHistorique(lot));
+    }
 
     @DeleteMapping("/delete/{id}")
     public int deleteHealthChekPreprodProdById(@PathVariable Long id) {

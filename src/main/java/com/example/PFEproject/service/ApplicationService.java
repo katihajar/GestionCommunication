@@ -75,6 +75,7 @@ public class ApplicationService {
         app.setCharteIncident(application.getCharteIncident());
         app.setCharteChangement(application.getCharteChangement());
         app.setDisponibilite(application.getDisponibilite());
+        app.setResponsable(application.getResponsable());
         return applicationRepo.save(app);
     }
 }

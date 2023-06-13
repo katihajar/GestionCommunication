@@ -12,6 +12,7 @@ public interface HealthChekPreprodProdRepo extends JpaRepository<HealthChekPrepr
     List<HealthChekPreprodProd> findByCreateurHealthChekPreprodProdLots(String lot);
 
     List<HealthChekPreprodProd> findFirst10ByCreateurHealthChekPreprodProdLotsAndDateAjoutBeforeOrderByDateAjoutDesc(String lot,Date date);
+    List<HealthChekPreprodProd> findByCreateurHealthChekPreprodProdLotsAndDateAjoutBetweenOrderByDateAjoutDesc(String lot,Date tenDaysBefore,Date today);
 
     int deleteHealthChekPreprodProdById(Long id);
 }

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -42,7 +43,26 @@ public class HealthChekPreprodProdService {
                 .map(h -> new HealthChekPreprodProdDTO(h.getId(), h.getTitre(), h.getDateAjout(), h.getType(), h.getEtatProcessusMetierList()))
                 .collect(Collectors.toList());
     }
+    public List<HealthChekPreprodProdDTO> getHistorique(String lot) {
+        // Calculate the date 10 days before today
+        LocalDate today = LocalDate.now();
+        LocalDate tenDaysBefore = today.minusDays(10);
 
+        // Convert LocalDate to Date
+        ZoneId defaultZoneId = ZoneId.systemDefault();
+        Date tenDaysBeforeDate = Date.from(tenDaysBefore.atStartOfDay(defaultZoneId).toInstant());
+        Date todayDate = Date.from(today.atStartOfDay(defaultZoneId).toInstant());
+
+
+
+        // Fetch the health checks within the specified date range
+        List<HealthChekPreprodProd> healthChecks = healthChekPreprodProdRepo.findByCreateurHealthChekPreprodProdLotsAndDateAjoutBetweenOrderByDateAjoutDesc(lot, tenDaysBeforeDate, todayDate);
+
+        // Return the retrieved health checks
+        return healthChecks.stream()
+                .map(h -> new HealthChekPreprodProdDTO(h.getId(), h.getTitre(), h.getDateAjout(), h.getType(), h.getEtatProcessusMetierList()))
+                .collect(Collectors.toList());
+    }
     public List<HealthChekPreprodProd> findByCreateurHealthChekPreprodProdId(Long id) {
         return healthChekPreprodProdRepo.findByCreateurHealthChekPreprodProdId(id);
     }
