@@ -5,11 +5,14 @@ import com.example.PFEproject.service.HealthCheckBwPerimetreService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
 import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
@@ -19,9 +22,26 @@ public class HealthCheckBwPerimetreRestRespo {
     @Autowired
     HealthCheckBwPerimetreService healthCheckBwPerimetreService;
 
+    @GetMapping("/searchHealth")
+    public ResponseEntity<Page<HealthCheckBwPerimetre>> searchHealth(
+            @RequestParam(required = false) String titre,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date dateAjout,
+            @RequestParam(required = true) String lot,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<HealthCheckBwPerimetre> health;
+        health = healthCheckBwPerimetreService.searchhealthBI(titre,dateAjout, lot, pageable);
+        return ResponseEntity.ok(health);
+    }
     @GetMapping("/lot/{lots}")
-    public ResponseEntity<List<HealthCheckBwPerimetre>> findByCreateurHealthCheckBwPerimetreLot(@PathVariable String lots) {
-        return ResponseEntity.ok().body(healthCheckBwPerimetreService.findByCreateurHealthCheckBwPerimetreLot(lots));
+    public ResponseEntity<Page<HealthCheckBwPerimetre>> findByCreateurHealthCheckBwPerimetreLots(
+            @PathVariable String lots,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int pageSize
+    ) {
+        Page<HealthCheckBwPerimetre> health = healthCheckBwPerimetreService.findByCreateurHealthCheckBwPerimetreLots(lots, page, pageSize);
+        return ResponseEntity.ok(health);
     }
 
 

@@ -1,18 +1,22 @@
 package com.example.PFEproject.service;
 
 import com.example.PFEproject.bean.HealthCheckBwPerimetre;
+import com.example.PFEproject.bean.HealthCheckFlamingo;
 import com.example.PFEproject.bean.HealthChekPreprodProd;
 import com.example.PFEproject.dto.HealthChekPreprodProdDTO;
 import com.example.PFEproject.repo.HealthChekPreprodProdRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,12 +56,8 @@ public class HealthChekPreprodProdService {
         ZoneId defaultZoneId = ZoneId.systemDefault();
         Date tenDaysBeforeDate = Date.from(tenDaysBefore.atStartOfDay(defaultZoneId).toInstant());
         Date todayDate = Date.from(today.atStartOfDay(defaultZoneId).toInstant());
-
-
-
         // Fetch the health checks within the specified date range
         List<HealthChekPreprodProd> healthChecks = healthChekPreprodProdRepo.findByCreateurHealthChekPreprodProdLotsAndDateAjoutBetweenOrderByDateAjoutDesc(lot, tenDaysBeforeDate, todayDate);
-
         // Return the retrieved health checks
         return healthChecks.stream()
                 .map(h -> new HealthChekPreprodProdDTO(h.getId(), h.getTitre(), h.getDateAjout(), h.getType(), h.getEtatProcessusMetierList()))
@@ -101,5 +101,50 @@ public class HealthChekPreprodProdService {
         }else {
             throw new Exception();
         }
+    }
+    public Page<HealthChekPreprodProd> findByCreateurHealthChekPreprodProdLots(String lots, int page, int pageSize) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "dateAjout");
+        Pageable pageable = PageRequest.of(page, pageSize, sort);
+        return healthChekPreprodProdRepo.findByCreateurHealthChekPreprodProdLots(lots, pageable);
+    }
+    public Page<HealthChekPreprodProd> searchhealthMonetics(String titre,String type,Date dateAjout, String lot, Pageable pageable) {
+        List<HealthChekPreprodProd> allHealth = healthChekPreprodProdRepo.findByCreateurHealthChekPreprodProdLots(lot);
+        List<HealthChekPreprodProd> filteredHealth = allHealth.stream()
+                .filter(change -> {
+                    boolean isMatched = true;
+                    if (titre != null && !titre.isEmpty() && !change.getTitre().contains(titre)) {
+                        isMatched = false;
+                    }
+
+                    if (dateAjout != null) {
+                        LocalDate changeDateFin = change.getDateAjout().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        LocalDate inputDateFin = dateAjout.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+                        if (!changeDateFin.isEqual(inputDateFin)) {
+                            isMatched = false;
+                        }
+                    }
+                    if (type != null && !type.isEmpty() && !change.getType().equals(type)) {
+                        isMatched = false;
+                    }
+
+                    return isMatched;
+                })
+                .sorted(Comparator.comparing(HealthChekPreprodProd::getDateAjout).reversed())
+                .collect(Collectors.toList());
+
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        List<HealthChekPreprodProd> paginatedHealth;
+
+        if (filteredHealth.size() < startItem) {
+            paginatedHealth = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, filteredHealth.size());
+            paginatedHealth = filteredHealth.subList(startItem, toIndex);
+        }
+
+        return new PageImpl<>(paginatedHealth, pageable, filteredHealth.size());
     }
 }

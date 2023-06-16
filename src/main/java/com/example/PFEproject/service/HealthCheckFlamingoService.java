@@ -1,16 +1,24 @@
 package com.example.PFEproject.service;
 
+import com.example.PFEproject.bean.ChangementPlanifier;
 import com.example.PFEproject.bean.HealthCheckFlamingo;
 import com.example.PFEproject.bean.PointVersion;
 import com.example.PFEproject.repo.HealthCheckFlamingoRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Transactional
@@ -73,6 +81,46 @@ public class HealthCheckFlamingoService {
         }else {
             throw new Exception();
         }
+    }
+    public Page<HealthCheckFlamingo> findByCreateurHealthCheckFlamingoLots(String lots, int page, int pageSize) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "dateAjout");
+        Pageable pageable = PageRequest.of(page, pageSize, sort);
+        return healthCheckFlamingoRepo.findByCreateurHealthCheckFlamingoLots(lots, pageable);
+    }
+    public Page<HealthCheckFlamingo> searchhealthFlamingo(String titre, Date dateFlux, String lot, Pageable pageable) {
+        List<HealthCheckFlamingo> allHealth = healthCheckFlamingoRepo.findByCreateurHealthCheckFlamingoLots(lot);
+        List<HealthCheckFlamingo> filteredHealth = allHealth.stream()
+                .filter(change -> {
+                    boolean isMatched = true;
+                    if (titre != null && !titre.isEmpty() && !change.getTitre().contains(titre)) {
+                        isMatched = false;
+                    }
+
+                    if (dateFlux != null) {
+                        LocalDate changeDateFin = change.getDateFlux().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        LocalDate inputDateFin = dateFlux.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        if (!changeDateFin.isEqual(inputDateFin)) {
+                            isMatched = false;
+                        }
+                    }
+                    return isMatched;
+                })
+                .sorted(Comparator.comparing(HealthCheckFlamingo::getDateAjout).reversed())
+                .collect(Collectors.toList());
+
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        List<HealthCheckFlamingo> paginatedHealth;
+
+        if (filteredHealth.size() < startItem) {
+            paginatedHealth = Collections.emptyList(); // Return an empty list if startItem exceeds the filteredChanges size
+        } else {
+            int toIndex = Math.min(startItem + pageSize, filteredHealth.size());
+            paginatedHealth = filteredHealth.subList(startItem, toIndex);
+        }
+
+        return new PageImpl<>(paginatedHealth, pageable, filteredHealth.size());
     }
 
 }

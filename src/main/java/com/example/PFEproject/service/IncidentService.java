@@ -1,15 +1,26 @@
 package com.example.PFEproject.service;
+import com.example.PFEproject.bean.Application;
+import com.example.PFEproject.bean.ChangementPlanifier;
 import com.example.PFEproject.bean.Incident;
 import com.example.PFEproject.repo.IncidentRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
+import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 @RequiredArgsConstructor
@@ -24,7 +35,8 @@ public class IncidentService {
     PlanActionService planActionService;
     @Autowired
     private JavaMailSender javaMailSender;
-
+    @Autowired
+    ApplicationService applicationService;
     public List<Incident> findAll() {
         return incidentRepo.findAll();
     }
@@ -52,10 +64,14 @@ public class IncidentService {
         }, delayDate);
     }
 
-    public List<Incident> findByApplicationLot(String lots) {
+    public List<Incident> findByApplicationLot2(String lots) {
         return incidentRepo.findByApplicationLot(lots);
     }
-
+    public Page<Incident> findByApplicationLot(String lots, int page, int pageSize) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "dateAjout");
+        Pageable pageable = PageRequest.of(page, pageSize, sort);
+        return incidentRepo.findByApplicationLot(lots, pageable);
+    }
     public List<Incident> findByCreateurIncidentUsername(String username) {
         return incidentRepo.findByCreateurIncidentUsername(username);
     }
@@ -104,5 +120,64 @@ public class IncidentService {
         }else {
             throw new Exception();
         }
+    }
+    public Page<Incident> searchIncidents(String titre, Date dateDebut, Date dateFin, String statut, long id, String desc, String lot, Pageable pageable) {
+        List<Incident> allIncidents = incidentRepo.findByApplicationLot(lot);
+        List<Incident> filteredIncidents = allIncidents.stream()
+                .filter(incident -> {
+                    boolean isMatched = true;
+
+                    if (titre != null && !titre.isEmpty() && !incident.getTitreIncident().contains(titre)) {
+                        isMatched = false;
+                    }
+
+                    if (desc != null && !desc.isEmpty() && !incident.getDescription().contains(desc)) {
+                        isMatched = false;
+                    }
+
+                    if (dateDebut != null) {
+                        LocalDate incidentdateDebut= incident.getDateDebut().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        LocalDate inputdateDebut = dateDebut.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+                        if (!incidentdateDebut.isEqual(inputdateDebut)) {
+                            isMatched = false;
+                        }
+                    }
+                    if (dateFin != null) {
+                        LocalDate incidentDateFin = incident.getDateFin().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        LocalDate inputDateFin = dateFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        System.out.println(incidentDateFin);
+                        System.out.println(inputDateFin);
+                        if (!incidentDateFin.isEqual(inputDateFin)) {
+                            isMatched = false;
+                        }
+                    }
+
+                    if (statut != null && !statut.isEmpty() && !incident.getStatut().equals(statut)) {
+                        isMatched = false;
+                    }
+
+                    if (id != 0 && !incident.getApplication().getId().equals(id)) {
+                        isMatched = false;
+                    }
+
+                    return isMatched;
+                })
+                .sorted(Comparator.comparing(Incident::getDateAjout).reversed())
+                .collect(Collectors.toList());
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        List<Incident> paginatedIncident;
+
+        if (filteredIncidents.size() < startItem) {
+            paginatedIncident = Collections.emptyList(); // Return an empty list if startItem exceeds the filteredChanges size
+        } else {
+            int toIndex = Math.min(startItem + pageSize, filteredIncidents.size());
+            paginatedIncident = filteredIncidents.subList(startItem, toIndex);
+        }
+
+        return new PageImpl<>(paginatedIncident, pageable, filteredIncidents.size());
+
     }
 }

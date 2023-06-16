@@ -1,14 +1,22 @@
 package com.example.PFEproject.service;
 
 import com.example.PFEproject.bean.HealthCheckBwPerimetre;
+import com.example.PFEproject.bean.HealthChekPreprodProd;
 import com.example.PFEproject.repo.HealthCheckBwPerimetreRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Transactional
@@ -55,5 +63,47 @@ public class HealthCheckBwPerimetreService {
         }else {
             throw new Exception();
         }
+    }
+    public Page<HealthCheckBwPerimetre> findByCreateurHealthCheckBwPerimetreLots(String lots, int page, int pageSize) {
+        Sort sort = Sort.by(Sort.Direction.DESC, "dateAjout");
+        Pageable pageable = PageRequest.of(page, pageSize, sort);
+        return healthCheckBwPerimetreRepo.findByCreateurHealthCheckBwPerimetreLots(lots, pageable);
+    }
+    public Page<HealthCheckBwPerimetre> searchhealthBI(String titre, Date dateAjout, String lot, Pageable pageable) {
+        List<HealthCheckBwPerimetre> allHealth = healthCheckBwPerimetreRepo.findByCreateurHealthCheckBwPerimetreLots(lot);
+        List<HealthCheckBwPerimetre> filteredHealth = allHealth.stream()
+                .filter(change -> {
+                    boolean isMatched = true;
+                    if (titre != null && !titre.isEmpty() && !change.getTitre().contains(titre)) {
+                        isMatched = false;
+                    }
+
+                    if (dateAjout != null) {
+                        LocalDate changeDateFin = change.getDateAjout().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        LocalDate inputDateFin = dateAjout.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+                        if (!changeDateFin.isEqual(inputDateFin)) {
+                            isMatched = false;
+                        }
+                    }
+
+                    return isMatched;
+                })
+                .sorted(Comparator.comparing(HealthCheckBwPerimetre::getDateAjout).reversed())
+                .collect(Collectors.toList());
+
+        int pageSize = pageable.getPageSize();
+        int currentPage = pageable.getPageNumber();
+        int startItem = currentPage * pageSize;
+        List<HealthCheckBwPerimetre> paginatedHealth;
+
+        if (filteredHealth.size() < startItem) {
+            paginatedHealth = Collections.emptyList();
+        } else {
+            int toIndex = Math.min(startItem + pageSize, filteredHealth.size());
+            paginatedHealth = filteredHealth.subList(startItem, toIndex);
+        }
+
+        return new PageImpl<>(paginatedHealth, pageable, filteredHealth.size());
     }
 }
