@@ -127,37 +127,40 @@ public class IncidentService {
                 .filter(incident -> {
                     boolean isMatched = true;
 
-                    if (titre != null && !titre.isEmpty() && !incident.getTitreIncident().contains(titre)) {
+                    if (titre != null && !titre.isEmpty() && incident.getTitreIncident() != null && !incident.getTitreIncident().contains(titre)) {
                         isMatched = false;
                     }
 
-                    if (desc != null && !desc.isEmpty() && !incident.getDescription().contains(desc)) {
+                    if (desc != null && !desc.isEmpty() && incident.getDescription() != null && !incident.getDescription().contains(desc)) {
                         isMatched = false;
                     }
 
-                    if (dateDebut != null) {
-                        LocalDate incidentdateDebut= incident.getDateDebut().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    if (dateDebut != null && incident.getDateDebut() != null) {
+                        LocalDate incidentdateDebut = incident.getDateDebut().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                         LocalDate inputdateDebut = dateDebut.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
                         if (!incidentdateDebut.isEqual(inputdateDebut)) {
                             isMatched = false;
                         }
-                    }
-                    if (dateFin != null) {
-                        LocalDate incidentDateFin = incident.getDateFin().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                        LocalDate inputDateFin = dateFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-                        System.out.println(incidentDateFin);
-                        System.out.println(inputDateFin);
-                        if (!incidentDateFin.isEqual(inputDateFin)) {
-                            isMatched = false;
-                        }
-                    }
-
-                    if (statut != null && !statut.isEmpty() && !incident.getStatut().equals(statut)) {
+                    }else if (dateDebut != null && incident.getDateDebut() == null) {
                         isMatched = false;
                     }
 
-                    if (id != 0 && !incident.getApplication().getId().equals(id)) {
+                    if (dateFin != null && incident.getDateFin() != null) {
+                        LocalDate incidentDateFin = incident.getDateFin().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                        LocalDate inputDateFin = dateFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+
+                        if (!incidentDateFin.isEqual(inputDateFin)) {
+                            isMatched = false;
+                        }
+                    }else if (dateFin != null && incident.getDateFin() == null) {
+                        isMatched = false;
+                    }
+                    if (statut != null && !statut.isEmpty() && incident.getStatut() != null && !incident.getStatut().equals(statut)) {
+                        isMatched = false;
+                    }
+
+                    if (id != 0 && incident.getApplication() != null && !incident.getApplication().getId().equals(id)) {
                         isMatched = false;
                     }
 
@@ -165,19 +168,19 @@ public class IncidentService {
                 })
                 .sorted(Comparator.comparing(Incident::getDateAjout).reversed())
                 .collect(Collectors.toList());
+
         int pageSize = pageable.getPageSize();
         int currentPage = pageable.getPageNumber();
         int startItem = currentPage * pageSize;
         List<Incident> paginatedIncident;
 
         if (filteredIncidents.size() < startItem) {
-            paginatedIncident = Collections.emptyList(); // Return an empty list if startItem exceeds the filteredChanges size
+            paginatedIncident = Collections.emptyList();
         } else {
             int toIndex = Math.min(startItem + pageSize, filteredIncidents.size());
             paginatedIncident = filteredIncidents.subList(startItem, toIndex);
         }
 
         return new PageImpl<>(paginatedIncident, pageable, filteredIncidents.size());
-
     }
 }

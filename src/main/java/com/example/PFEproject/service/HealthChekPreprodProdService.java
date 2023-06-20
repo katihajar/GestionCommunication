@@ -110,21 +110,23 @@ public class HealthChekPreprodProdService {
     public Page<HealthChekPreprodProd> searchhealthMonetics(String titre,String type,Date dateAjout, String lot, Pageable pageable) {
         List<HealthChekPreprodProd> allHealth = healthChekPreprodProdRepo.findByCreateurHealthChekPreprodProdLots(lot);
         List<HealthChekPreprodProd> filteredHealth = allHealth.stream()
-                .filter(change -> {
+                .filter(health -> {
                     boolean isMatched = true;
-                    if (titre != null && !titre.isEmpty() && !change.getTitre().contains(titre)) {
+                    if (titre != null && !titre.isEmpty() && health.getTitre()!=null && !health.getTitre().contains(titre)) {
                         isMatched = false;
                     }
 
-                    if (dateAjout != null) {
-                        LocalDate changeDateFin = change.getDateAjout().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    if (dateAjout != null && health.getDateAjout() != null) {
+                        LocalDate changeDateFin = health.getDateAjout().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                         LocalDate inputDateFin = dateAjout.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
                         if (!changeDateFin.isEqual(inputDateFin)) {
                             isMatched = false;
                         }
+                    }else if (dateAjout != null && health.getDateAjout() == null) {
+                        isMatched = false;
                     }
-                    if (type != null && !type.isEmpty() && !change.getType().equals(type)) {
+                    if (type != null && !type.isEmpty() && !health.getType().equals(type)) {
                         isMatched = false;
                     }
 

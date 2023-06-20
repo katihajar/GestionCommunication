@@ -87,30 +87,34 @@ public class ChangementPlanifierService {
         List<ChangementPlanifier> filteredChanges = allChange.stream()
                 .filter(change -> {
                     boolean isMatched = true;
-                    if (titre != null && !titre.isEmpty() && !change.getTitre().contains(titre)) {
+                    if (titre != null && !titre.isEmpty() && change.getTitre() != null && !change.getTitre().contains(titre)) {
                         isMatched = false;
                     }
 
-                    if (vers != null && !vers.isEmpty() && !change.getVersion().equals(vers)) {
+                    if (vers != null && !vers.isEmpty() && change.getVersion() != null && !change.getVersion().equals(vers)) {
                         isMatched = false;
                     }
 
-                    if (dateDebut != null) {
+                    if (dateDebut != null && change.getDateDebut() != null) {
                         LocalDate changedateDebut= change.getDateDebut().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                         LocalDate inputdateDebut = dateDebut.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                         if (!changedateDebut.isEqual(inputdateDebut)) {
                             isMatched = false;
                         }
+                    }else if (dateDebut != null && change.getDateDebut() == null) {
+                        isMatched = false;
                     }
-                    if (dateFin != null) {
+                    if (dateFin != null && change.getDateFin() != null ) {
                         LocalDate changeDateFin = change.getDateFin().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                         LocalDate inputDateFin = dateFin.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                         if (!changeDateFin.isEqual(inputDateFin)) {
                             isMatched = false;
                         }
+                    }else if (dateFin != null && change.getDateFin() == null) {
+                        isMatched = false;
                     }
 
-                    if (statut != null && !statut.isEmpty() && !change.getStatut().equals(statut)) {
+                    if (statut != null && !statut.isEmpty() && change.getStatut() != null && !change.getStatut().equals(statut)) {
                         isMatched = false;
                     }
 

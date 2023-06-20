@@ -90,19 +90,22 @@ public class HealthCheckFlamingoService {
     public Page<HealthCheckFlamingo> searchhealthFlamingo(String titre, Date dateFlux, String lot, Pageable pageable) {
         List<HealthCheckFlamingo> allHealth = healthCheckFlamingoRepo.findByCreateurHealthCheckFlamingoLots(lot);
         List<HealthCheckFlamingo> filteredHealth = allHealth.stream()
-                .filter(change -> {
+                .filter(health -> {
                     boolean isMatched = true;
-                    if (titre != null && !titre.isEmpty() && !change.getTitre().contains(titre)) {
+                    if (titre != null && !titre.isEmpty() && health.getTitre()!=null  && !health.getTitre().contains(titre)) {
                         isMatched = false;
                     }
 
-                    if (dateFlux != null) {
-                        LocalDate changeDateFin = change.getDateFlux().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    if (dateFlux != null && health.getDateFlux() != null) {
+                        LocalDate changeDateFin = health.getDateFlux().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                         LocalDate inputDateFin = dateFlux.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                         if (!changeDateFin.isEqual(inputDateFin)) {
                             isMatched = false;
                         }
+                    }else if (dateFlux != null && health.getDateFlux() == null) {
+                        isMatched = false;
                     }
+
                     return isMatched;
                 })
                 .sorted(Comparator.comparing(HealthCheckFlamingo::getDateAjout).reversed())

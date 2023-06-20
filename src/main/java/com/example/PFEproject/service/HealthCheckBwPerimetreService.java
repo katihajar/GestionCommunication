@@ -72,19 +72,21 @@ public class HealthCheckBwPerimetreService {
     public Page<HealthCheckBwPerimetre> searchhealthBI(String titre, Date dateAjout, String lot, Pageable pageable) {
         List<HealthCheckBwPerimetre> allHealth = healthCheckBwPerimetreRepo.findByCreateurHealthCheckBwPerimetreLots(lot);
         List<HealthCheckBwPerimetre> filteredHealth = allHealth.stream()
-                .filter(change -> {
+                .filter(health -> {
                     boolean isMatched = true;
-                    if (titre != null && !titre.isEmpty() && !change.getTitre().contains(titre)) {
+                    if (titre != null && !titre.isEmpty() && health.getTitre()!=null && !health.getTitre().contains(titre)) {
                         isMatched = false;
                     }
 
-                    if (dateAjout != null) {
-                        LocalDate changeDateFin = change.getDateAjout().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+                    if (dateAjout != null && health.getDateAjout() != null) {
+                        LocalDate changeDateFin = health.getDateAjout().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                         LocalDate inputDateFin = dateAjout.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 
                         if (!changeDateFin.isEqual(inputDateFin)) {
                             isMatched = false;
                         }
+                    }else if (dateAjout != null && health.getDateAjout() == null) {
+                        isMatched = false;
                     }
 
                     return isMatched;
