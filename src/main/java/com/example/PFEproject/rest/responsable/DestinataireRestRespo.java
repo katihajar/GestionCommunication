@@ -5,6 +5,9 @@ import com.example.PFEproject.service.DestinataireService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -25,8 +28,25 @@ public class DestinataireRestRespo {
         return destinataireService.deleteDestinataireCommunicationById(id);
     }
     @GetMapping("/findByApplication/{id}")
-    public ResponseEntity<List<DestinataireCommunication>> findDestinataireCommunicationByApplicationId(@PathVariable Long id) {
-        return ResponseEntity.ok().body(destinataireService.findDestinataireCommunicationByApplicationId(id));
+
+    public ResponseEntity<Page<DestinataireCommunication>> findDestinataireCommunicationByApplicationId(@PathVariable Long id,
+                                                                                                        @RequestParam(defaultValue = "0") int page,
+                                                                                                        @RequestParam(defaultValue = "10") int pageSize) {
+        Page<DestinataireCommunication> dests = destinataireService.findDestinataireCommunicationByApplicationId(id, page, pageSize);
+        return ResponseEntity.ok(dests);
+    }
+    @GetMapping("/search")
+    public ResponseEntity<Page<DestinataireCommunication>> searchDest(
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String statut,
+            @RequestParam(required = true) long id,
+            @RequestParam(required = false) String type,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<DestinataireCommunication> dests = destinataireService.searchDest(email, statut, id, type, pageable);
+
+        return ResponseEntity.ok(dests);
     }
 
     @PutMapping("/validate")

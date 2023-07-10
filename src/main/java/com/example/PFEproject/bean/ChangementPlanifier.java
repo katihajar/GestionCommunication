@@ -33,8 +33,12 @@ public class ChangementPlanifier {
     @NonNull
     @Size(min = 3, max = 1000)
     private String impactMetier;
+    private String debut;
     private Date dateDebut;
     private Date dateFin;
+    private Date prochaineCom;
+    @Size(min = 3, max = 1000)
+    private String planRollBack;
     @Size(min = 0, max = 1000)
     private String type;
     @JsonProperty(access=JsonProperty.Access.WRITE_ONLY)

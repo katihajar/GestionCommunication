@@ -54,7 +54,6 @@ public class IncidentRestPilote {
         } else {
             incidents = incidentService.searchIncidents(titre, dateDebut, dateFin, statut, 0,desc, lot, pageable);
         }
-
         return ResponseEntity.ok(incidents);
     }
 
