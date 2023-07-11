@@ -57,6 +57,7 @@ public class ProblemeService {
             prblSave.setDescription(prbl.getDescription());
             prblSave.setStatut(prbl.getStatut());
             prblSave.setDateAjout(prbl.getDateAjout());
+            prblSave.setCreateurProbleme(prbl.getCreateurProbleme());
             Probleme prbl1 = problemeRepo.save(prblSave);
 
             if (prbl.getAvancementActionProbleme() != null) {
