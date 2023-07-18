@@ -15,6 +15,7 @@ import java.util.List;
 public interface IncidentRepo extends JpaRepository<Incident, Long> {
     List<Incident> findByCreateurIncidentUsername(String username);
     List<Incident> findByApplicationLot(String lots);
+    List<Incident> findByApplicationLotAndDateAjout(String lots,Date date);
     Page<Incident> findByApplicationLot(String lots, Pageable pageable);
     int deleteIncidentById(Long id);
     List<Incident> findByApplicationResponsableId(Long id);

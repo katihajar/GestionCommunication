@@ -67,6 +67,11 @@ public class IncidentRestPilote {
         Page<Incident> incidents = incidentService.findByApplicationLot(lots, page, pageSize);
         return ResponseEntity.ok(incidents);
     }
+    @GetMapping("/todayincident/lot/{lots}")
+    public ResponseEntity<List<Incident>> findByApplicationLotAndTodayDate(@PathVariable String lots) {
+        return ResponseEntity.ok(incidentService.findByApplicationLotAndTodayDate(lots));
+    }
+
     @GetMapping("/findAll")
     public ResponseEntity<List<Incident>> findAll() {
         return ResponseEntity.ok().body(incidentService.findAll());

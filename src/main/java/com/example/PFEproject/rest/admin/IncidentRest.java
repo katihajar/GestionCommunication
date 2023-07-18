@@ -28,4 +28,8 @@ public class IncidentRest {
     public ResponseEntity<List<Incident>> findByApplicationResponsableId(@PathVariable Long id) {
         return ResponseEntity.ok().body(incidentService.findByApplicationResponsableId(id));
     }
+    @GetMapping("/todayincident/lot/{lots}")
+    public ResponseEntity<List<Incident>> findByApplicationLotAndTodayDate(@PathVariable String lots) {
+        return ResponseEntity.ok(incidentService.findByApplicationLotAndTodayDate(lots));
+    }
 }

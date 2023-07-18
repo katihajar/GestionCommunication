@@ -5,6 +5,7 @@ import com.example.PFEproject.bean.Incident;
 import com.example.PFEproject.repo.IncidentRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.mortbay.util.ajax.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
 import org.springframework.data.support.PageableExecutionUtils;
@@ -17,9 +18,10 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-import java.time.LocalDate;
-import java.time.ZoneId;
+import java.text.SimpleDateFormat;
+import java.time.*;
 import java.util.*;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 
@@ -72,6 +74,11 @@ public class IncidentService {
         Pageable pageable = PageRequest.of(page, pageSize, sort);
         return incidentRepo.findByApplicationLot(lots, pageable);
     }
+
+    public List<Incident> findByApplicationLot(String lots) {
+        return incidentRepo.findByApplicationLot(lots);
+    }
+
     public List<Incident> findByCreateurIncidentUsername(String username) {
         return incidentRepo.findByCreateurIncidentUsername(username);
     }
@@ -86,6 +93,28 @@ public class IncidentService {
         return r + r2;
     }
 
+
+    public List<Incident> findByApplicationLotAndTodayDate(String lots) {
+        LocalDate currentDate = LocalDate.now();
+        LocalDateTime startOfDay = LocalDateTime.of(currentDate, LocalTime.MIN);
+        Date date = Date.from(startOfDay.atZone(ZoneId.systemDefault()).toInstant());
+
+        Date formattedDate = Date.from(date.toInstant().atZone(ZoneId.systemDefault()).toInstant());
+        System.out.println(formattedDate);
+        System.out.println(date);
+        List<Incident> allIncidents = incidentRepo.findByApplicationLot(lots);
+
+        List<Incident> matchedIncidents = new ArrayList<>();
+        for (int i = 0; i < allIncidents.size(); i++) {
+            Date incidentDate = allIncidents.get(i).getDateAjout();
+            if (formattedDate.equals(incidentDate)) {
+                System.out.println(i + " : " + allIncidents.get(i).getDateAjout());
+                matchedIncidents.add(allIncidents.get(i)); // Add the matched incident to the list
+            }
+        }
+
+        return matchedIncidents;
+    }
     public Incident save(Incident incident) throws Exception{
         if(incident != null) {
             Incident incidentSave= new Incident();

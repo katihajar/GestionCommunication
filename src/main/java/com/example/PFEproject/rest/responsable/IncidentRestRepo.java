@@ -33,6 +33,10 @@ public class IncidentRestRepo {
         Page<Incident> incidents = incidentService.findByApplicationLot(lots, page, pageSize);
         return ResponseEntity.ok(incidents);
     }
+    @GetMapping("/todayincident/lot/{lots}")
+    public ResponseEntity<List<Incident>> findByApplicationLotAndTodayDate(@PathVariable String lots) {
+        return ResponseEntity.ok(incidentService.findByApplicationLotAndTodayDate(lots));
+    }
     @GetMapping("/searchIncident")
     public ResponseEntity<Page<Incident>> searchIncidents(
             @RequestParam(required = false) String titre,
