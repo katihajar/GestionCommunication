@@ -1,27 +1,16 @@
 package com.example.PFEproject.service;
-import com.example.PFEproject.bean.Application;
-import com.example.PFEproject.bean.ChangementPlanifier;
 import com.example.PFEproject.bean.Incident;
 import com.example.PFEproject.repo.IncidentRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.mortbay.util.ajax.JSON;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.*;
-import org.springframework.data.support.PageableExecutionUtils;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import java.text.SimpleDateFormat;
 import java.time.*;
 import java.util.*;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 
@@ -37,8 +26,7 @@ public class IncidentService {
     PlanActionService planActionService;
     @Autowired
     private JavaMailSender javaMailSender;
-    @Autowired
-    ApplicationService applicationService;
+
     public List<Incident> findAll() {
         return incidentRepo.findAll();
     }
@@ -66,9 +54,7 @@ public class IncidentService {
         }, delayDate);
     }
 
-    public List<Incident> findByApplicationLot2(String lots) {
-        return incidentRepo.findByApplicationLot(lots);
-    }
+
     public Page<Incident> findByApplicationLot(String lots, int page, int pageSize) {
         Sort sort = Sort.by(Sort.Direction.DESC, "dateAjout");
         Pageable pageable = PageRequest.of(page, pageSize, sort);
@@ -100,16 +86,14 @@ public class IncidentService {
         Date date = Date.from(startOfDay.atZone(ZoneId.systemDefault()).toInstant());
 
         Date formattedDate = Date.from(date.toInstant().atZone(ZoneId.systemDefault()).toInstant());
-        System.out.println(formattedDate);
-        System.out.println(date);
+
         List<Incident> allIncidents = incidentRepo.findByApplicationLot(lots);
 
         List<Incident> matchedIncidents = new ArrayList<>();
-        for (int i = 0; i < allIncidents.size(); i++) {
-            Date incidentDate = allIncidents.get(i).getDateAjout();
+        for (Incident allIncident : allIncidents) {
+            Date incidentDate = allIncident.getDateAjout();
             if (formattedDate.equals(incidentDate)) {
-                System.out.println(i + " : " + allIncidents.get(i).getDateAjout());
-                matchedIncidents.add(allIncidents.get(i)); // Add the matched incident to the list
+                matchedIncidents.add(allIncident); // Add the matched incident to the list
             }
         }
 
